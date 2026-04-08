@@ -162,7 +162,8 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 
 <div id="list">
   <div id="list-hdr">
-    <h2 onclick="goMap()" style="cursor:pointer;">KDE SVÍTÍ</h2>
+    <h2>KDE SVÍTÍ</h2>
+    <button class="lhb" onclick="goMap()">&#8592; MAPA</button>
   </div>
   <div id="list-fil">
     <button class="fb on" onclick="setFlt('vse',this)">VŠE</button>
@@ -199,6 +200,7 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 
 <div id="ctl">
   <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
+  <button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>
   <button class="cbtn" id="btn-loc" onclick="locateMe()">&#9679; POLOHA</button>
 </div>
 
@@ -289,7 +291,7 @@ function p2(n){return String(n).padStart(2,'0');}
 function toISO(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':'+p2(d.getMinutes());}
 function hk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':00';}
 function ftm(d){return d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});}
-function clt(c){if(c==null)return'-';if(c<20)return c+'% jasno';if(c<40)return c+'% skoro jasno';if(c<60)return c+'% polojasno';if(c<80)return c+'% oblačno';return c+'% zataženo';}
+function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<60)return 'Polojasno';if(c<80)return 'Oblačno';return 'Zataženo';}
 
 // ── GEOLOCATION ──────────────────────────────────────────────────────────────
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -310,11 +312,29 @@ function fmtDist(km) {
 
 function startGeo() {
   if (!navigator.geolocation) return;
-  navigator.geolocation.watchPosition(function(pos) {
+  navigator.geolocation.getCurrentPosition(function(pos) {
     userLat = pos.coords.latitude;
     userLng = pos.coords.longitude;
     updAll();
-  }, null, {enableHighAccuracy:true, maximumAge:30000});
+  }, function(err) {
+    console.warn('Geolocation error:', err.message);
+  }, {enableHighAccuracy:true, timeout:10000, maximumAge:60000});
+}
+
+function reqGeo() {
+  var btn = document.getElementById('btn-geo');
+  if (!navigator.geolocation) { btn.textContent = 'GPS nedostupná'; return; }
+  btn.textContent = '⏳ HLEDÁM...';
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+    btn.textContent = '✓ POLOHA';
+    btn.classList.add('on');
+    if (document.getElementById('list').classList.contains('open')) renderList();
+  }, function(err) {
+    btn.textContent = '✗ POLOHA';
+    console.warn('GPS:', err.message);
+  }, {enableHighAccuracy:true, timeout:10000});
 }
 
 // ── MAP ──────────────────────────────────────────────────────────────────────
@@ -695,7 +715,6 @@ function fmtDist(m) {
 document.getElementById('dt').value = toISO(cDate);
 initMkrs();
 loadWx();
-startGeo();
 setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
 setInterval(loadWx, 30*60*1000);
 </script>
