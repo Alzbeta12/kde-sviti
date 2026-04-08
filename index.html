@@ -31,10 +31,12 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 #sdot{width:21px;height:21px;border-radius:50%;border:var(--rule);background:var(--sun);flex-shrink:0;transition:background 0.5s;}
 #sdot.pulse{animation:pulse 2.2s ease-in-out infinite;}
 #hdr-bot{display:flex;align-items:center;}
-#btn-rt{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 11px;background:var(--ink);color:var(--sun);border:none;border-right:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-rt{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 11px;background:var(--paper);color:var(--ink);border:none;border-right:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-rt.off{background:transparent;color:var(--ink);}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
-#btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:var(--rule);cursor:pointer;margin-left:auto;white-space:nowrap;flex-shrink:0;}
+#btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-map:hover{background:var(--sun);}
+#btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;margin-left:auto;white-space:nowrap;flex-shrink:0;}
 #btn-lst:hover{background:var(--sun);}
 .cnt-s{color:var(--sun);-webkit-text-stroke:1px var(--ink);font-size:1.1rem!important;}
 .cnt-p{color:var(--amber);font-size:1.1rem!important;}
@@ -44,13 +46,13 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 /* LIST */
 #list{position:fixed;inset:0;z-index:900;background:var(--paper);transform:translateX(-100%);transition:transform 0.28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);}
 #list.open{transform:translateX(0);}
-#list-hdr{display:flex;align-items:center;padding:12px 14px;border-bottom:var(--rule);gap:10px;flex-shrink:0;}
-#list-hdr h2{font-family:var(--display);font-size:1.4rem;letter-spacing:2px;flex:1;}
-.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:5px 10px;background:transparent;border:var(--rule);cursor:pointer;white-space:nowrap;}
+#list-hdr{display:flex;align-items:center;padding:10px 14px;border-bottom:var(--rule);gap:12px;flex-shrink:0;}
+#list-hdr h2{font-family:var(--display);font-size:1.2rem;letter-spacing:2px;flex:1;min-width:0;}
+.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;}
 .lhb:hover{background:var(--sun);}
-#list-fil{display:flex;border-bottom:var(--rule);overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+#list-fil{display:flex;border-bottom:var(--rule);overflow-x:auto;scrollbar-width:none;flex-shrink:0;-webkit-overflow-scrolling:touch;}
 #list-fil::-webkit-scrollbar{display:none;}
-.fb{font-family:var(--font);font-size:0.56rem;padding:7px 9px;background:transparent;color:var(--ink);border:none;border-right:1px solid rgba(13,13,13,0.12);cursor:pointer;white-space:nowrap;}
+.fb{font-family:var(--font);font-size:0.65rem;padding:10px 12px;background:transparent;color:var(--ink);border:none;border-right:1px solid rgba(13,13,13,0.12);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .fb.on{background:var(--ink);color:var(--sun);font-weight:700;}
 #list-sc{flex:1;overflow-y:auto;}
 #list-sc::-webkit-scrollbar{width:3px;}
@@ -102,7 +104,7 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 
 /* BOTTOM LEFT CONTROLS */
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
-.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:7px 11px;background:var(--paper);border:var(--rule);cursor:pointer;white-space:nowrap;}
+.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:7px 11px;background:var(--ink);color:var(--paper);border:var(--rule);cursor:pointer;white-space:nowrap;}
 .cbtn:hover{background:var(--sun);}
 .cbtn.on{background:var(--ink);color:var(--sun);}
 
@@ -139,33 +141,30 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 
 <div id="hdr">
   <div id="hdr-top">
-    <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVITI</span></div>
-    <div class="hc"><span class="lb">Pocasi</span><span class="vl" id="hw">...</span></div>
+    <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVÍTÍ</span></div>
+    <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
     <div class="hc"><span class="lb">Slunce</span><span class="vl" id="hs">-</span></div>
-    <div class="hc" id="hc-s" style="display:none"><span class="lb">Sviti</span><span class="vl cnt-s" id="cnt-s">0</span></div>
-    <div class="hc" id="hc-p" style="display:none"><span class="lb">Cast.</span><span class="vl cnt-p" id="cnt-p">0</span></div>
-    <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataz.</span><span class="vl cnt-c" id="cnt-c">0</span></div>
-    <div class="hc" id="hc-r" style="display:none"><span class="lb">Prsi</span><span class="vl cnt-r" id="cnt-r">0</span></div>
+    <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
+    <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataženo</span><span class="vl cnt-c" id="cnt-c">0</span></div>
   </div>
   <div id="hdr-bot">
-    <button id="btn-rt" onclick="goRT()">&#9201; TED ZIVE</button>
+    <button id="btn-rt" onclick="goRT()">&#9201; TEĎ ŽIVĚ</button>
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
+    <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
   </div>
 </div>
 
 <div id="list">
   <div id="list-hdr">
-    <h2>KDE SVITI</h2>
-    <button class="lhb" onclick="goMap()">&#8592; MAPA</button>
-    <button class="lhb" onclick="closeList()">&#10005;</button>
+    <h2 onclick="goMap()" style="cursor:pointer;">KDE SVÍTÍ</h2>
   </div>
   <div id="list-fil">
     <button class="fb on" onclick="setFlt('vse',this)">VSE</button>
-    <button class="fb" onclick="setFlt('lokal',this)">LOKAL</button>
+    <button class="fb" onclick="setFlt('zahradka',this)">ZAHRÁDKA</button>
+    <button class="fb" onclick="setFlt('lokal',this)">LOKÁLY</button>
     <button class="fb" onclick="setFlt('pivovar',this)">PIVOVARY</button>
-    <button class="fb" onclick="setFlt('hist',this)">HISTORICKE</button>
-    <button class="fb" onclick="setFlt('dalsi',this)">OSTATNI</button>
+    <button class="fb" onclick="setFlt('mokrej',this)">MOKREJ LOKET</button>
   </div>
   <div id="list-sc"></div>
 </div>
@@ -175,7 +174,7 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
   <div id="sh-in">
     <div id="sh-nav">
       <button class="snb" onclick="backToList()">&#8592; SEZNAM</button>
-      <button class="snb" onclick="closeSheet()">&#10005; ZAVRIT</button>
+      <button class="snb" onclick="closeSheet()">&#10005; ZAVŘÍT</button>
     </div>
     <div id="sh-badge"></div>
     <div id="sh-name"></div>
@@ -183,10 +182,10 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
     <div id="sh-hours"></div>
     <div id="sh-st"></div>
     <div id="sh-grid">
-      <div class="ss"><span class="sl">VYSKA SLUNCE</span><span class="sv" id="s-alt">-</span></div>
-      <div class="ss"><span class="sl">ZAPAD SLUNCE</span><span class="sv" id="s-set">-</span></div>
-      <div class="ss"><span class="sl">OBLACNOST</span><span class="sv" id="s-cld">-</span></div>
-      <div class="ss"><span class="sl">SRAZKY</span><span class="sv" id="s-rain">-</span></div>
+      <div class="ss"><span class="sl">VÝŠKA SLUNCE</span><span class="sv" id="s-alt">-</span></div>
+      <div class="ss"><span class="sl">ZÁPAD SLUNCE</span><span class="sv" id="s-set">-</span></div>
+      <div class="ss"><span class="sl">OBLAČNOST</span><span class="sv" id="s-cld">-</span></div>
+      <div class="ss"><span class="sl">SRÁŽKY</span><span class="sv" id="s-rain">-</span></div>
     </div>
     <div id="sh-beer"></div>
     <div id="sh-note"></div>
@@ -194,7 +193,7 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 </div>
 
 <div id="ctl">
-  <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STINY</button>
+  <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
 </div>
 
 <div id="slwrap">
@@ -207,11 +206,10 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 </div>
 
 <div id="leg">
-  <div class="lr"><div class="ld" style="background:#F7C325"></div>SVITI</div>
-  <div class="lr"><div class="ld" style="background:#D4A017"></div>CASTECNE</div>
-  <div class="lr"><div class="ld" style="background:#ccc"></div>ZATAZENO</div>
-  <div class="lr"><div class="ld" style="background:#4A90D9"></div>PRSI</div>
-  <div class="lr"><div class="ld" style="background:#888"></div>STIN</div>
+  <div class="lr"><div class="ld" style="background:#F7C325"></div>SVÍTÍ</div>
+  <div class="lr"><div class="ld" style="background:#D4A017"></div>ČÁSTEČNĚ</div>
+  <div class="lr"><div class="ld" style="background:#ccc"></div>ZATAŽENO</div>
+  <div class="lr"><div class="ld" style="background:#888"></div>STÍN</div>
 </div>
 
 <!-- Leaflet MUST load before app script -->
@@ -236,36 +234,35 @@ var PLACES = [
   {id:1,  name:"Lokal Nad Stromovkou", addr:"Nad Kralovskou oborou 31, Praha 7",  hours:"11:30-23:30",               beer:"Tankovy Prazdroj",            out:"zahradka pred podnikem",          lat:50.1021,   lng:14.4089,   f:180,a:150, type:"lokal",   note:"Kousek od Stromovky, pivo cerstve do posledniho loku."},
   {id:2,  name:"Lokal U Bile kuzelky", addr:"Misenska 12, Mala Strana",           hours:"11:00-24:00",               beer:"Tankovy Prazdroj",            out:"pavlacova zahradka",              lat:50.0878,   lng:14.4033,   f:160,a:90,  type:"lokal",   note:"Blizko Karlova mostu, klidnejsi sourozenec Dlouhe."},
   {id:3,  name:"Lokal Hamburk",        addr:"Sokolovska 55, Karlin",              hours:"11:00-23:00",               beer:"Tankovy Prazdroj",            out:"stani pred podnikem",             lat:50.0923,   lng:14.4457,   f:200,a:110, type:"lokal",   note:"Vedle Dvou Kohoutu - pekny pivni dvojuder na jedne ulici."},
-  {id:4,  name:"U Kalendu",            addr:"Rasinovo nabrezi 58, Praha 2",       hours:"11:30-23:30",               beer:"Tankovy Prazdroj",            out:"naplavka",                        lat:50.0722,   lng:14.4168,   f:270,a:150, type:"lokal",   note:"Michelin Bib Gourmand 2025. Nejlepsi venku v Praze - primo u Vltavy."},
+  {id:4,  name:"U Kalendu",            addr:"Rasinovo nabrezi 58, Praha 2",       hours:"11:30-23:30",               beer:"Tankovy Prazdroj",            out:"naplavka",                        lat:50.0713,   lng:14.4146,   f:270,a:150, type:"mokrej",   note:"Michelin Bib Gourmand 2025. Nejlepsi venku v Praze - primo u Vltavy."},
   // PIVOVAR
   {id:5,  name:"Dva Kohouti",          addr:"Sokolovska 81, Karlin",              hours:"Po-Pa 15-01 / So-Ne 12-",   beer:"Matuska na cepu",             out:"prostorna terasa + kryта cast",   lat:50.0926,   lng:14.4461,   f:180,a:120, type:"pivovar", note:"Craft pivo primo ze zdroje, jeden z nejlepsich vyberu v Praze."},
   {id:6,  name:"Automat Matuska",      addr:"Dejvicka 4, Praha 6",                hours:"Ut-So 11:30-24 / Po,Ne 12-22", beer:"10 kohoutu Matuska",       out:"parapety obsypane lidmi",         lat:50.1006,   lng:14.3938,   f:200,a:120, type:"pivovar", note:"Stani venku bezna vec za kazdeho pocasi. Dejvicke BBQ. Nanopivovar ve sklepe."},
   {id:7,  name:"U Fleku",              addr:"Kremencova 11, Nove Mesto",           hours:"denne 10:00-23:00",          beer:"Vlastni Flekovsky tmavy 13", out:"venkovni zahrada v arealu",        lat:50.0789,   lng:14.4166,   f:180,a:100, type:"pivovar", note:"Pivovar od 1499. Pozor na nenuceně vnucovane palenky."},
-  {id:8,  name:"Skô",                  addr:"Bubenske nabrezi 306/13, Holesovicka trznice",    hours:"Po 17-23 / Ut-Pa 11:30-14:30 a 17-23 / So 11:30-23 / Ne 11:30-17", beer:"Tankovy Prazdroj", out:"venkovni terasa v trznici",   lat:50.1003,   lng:14.4458,   f:180,a:160, type:"pivovar", note:"Slovenska restaurace Ambiente v Holesovicke trznici. Venkovni terasa na dvore."},
+  {id:8,  name:"Skô",                  addr:"Bubenske nabrezi 306/13, Holesovicka trznice",    hours:"Po 17-23 / Ut-Pa 11:30-14:30 a 17-23 / So 11:30-23 / Ne 11:30-17", beer:"Tankovy Prazdroj", out:"venkovni terasa v trznici",   lat:50.1003,   lng:14.4458,   f:180,a:160, type:"zahradka", note:"Slovenska restaurace Ambiente v Holesovicke trznici. Venkovni terasa na dvore."},
   // HISTORICKE
-  {id:9,  name:"U Pinkasku",           addr:"Jungmannovo nam. 16, Nove Mesto",    hours:"10:00-22:30",               beer:"Nepast. Prazdroj od 1843",     out:"goticka zahrada (jaro-podzim)",   lat:50.0832,   lng:14.4233,   f:170,a:100, type:"hist",    note:"Prvni hospoda v Praze kde se zacala cepovat plzen - od roku 1843."},
-  {id:10, name:"Malostranska beseda",  addr:"Malostranske nam. 21, Mala Strana", hours:"denne 11:00-23:00",          beer:"Tankovy Prazdroj",             out:"predzahradka v podloubi 48 mist", lat:50.0883,   lng:14.4048,   f:160,a:100, type:"hist",    note:"PUOR koncept. Primo na Malostranskkem namesti."},
-  {id:11, name:"Mincovna",             addr:"Staromestske nam. 7, Praha 1",       hours:"denne 11:30-23:00",          beer:"Tankovy Prazdroj",             out:"zahradka na Staromaku",           lat:50.0878,   lng:14.4213,   f:200,a:180, type:"hist",    note:"Jedina restaurace na Staromaku primarne pro mistni."},
-  {id:12, name:"U Zlateho slona",      addr:"Havelska 9, Stare Mesto",            hours:"denne 11:00-23:00",          beer:"Tankovy Prazdroj",             out:"celorocni zahradka u Havelaku",   lat:50.0855,   lng:14.4218,   f:180,a:90,  type:"hist",    note:"100 piv = vlastni slon na stene se jmenem. Celorocni zahradka - i v prosinci."},
-  {id:13, name:"U Dvou kocek",         addr:"Uhelny trh 10, Stare Mesto",         hours:"denne 11:00-23:00",          beer:"Tankovy Prazdroj",             out:"celorocni zahradka",              lat:50.0843,   lng:14.4204,   f:200,a:90,  type:"hist",    note:"Od 1678. Venkovni zahradka funguje celorocne, cepuji i snyt a mliko."},
-  {id:14, name:"U Kocoura",            addr:"Nerudova 2, Mala Strana",            hours:"denne 12:00-22:30",          beer:"Prazdroj + Kozel",             out:"stani na schodech a chodniku",    lat:50.0887,   lng:14.4020,   f:210,a:100, type:"hist",    note:"130 m od Hrocha. Levne pivo, lide si chodí stat ven. Jen hotove."},
-  {id:15, name:"U Rarasku",            addr:"Mikulandska 7, Nove Mesto",          hours:"denne 15:00-02:00",          beer:"Tank.Prazdroj + Zvikov",       out:"kryta zahradka ve vnitrobloku",   lat:50.08153,  lng:14.41784,  f:180,a:80,  type:"hist",    note:"Velka zahradka (60 mist + 40 na stani), v lete ziva hudba."},
-  {id:16, name:"U Buldoga",            addr:"Mikulandska 7, Nove Mesto",          hours:"Ut-So 15-02 / Ne 15-00",     beer:"Prazdroj + Zvikov",            out:"sdilena zahradka s Rarasky",      lat:50.08151,  lng:14.41772,  f:180,a:80,  type:"hist",    note:"Prestehoval ze Smichova hned vedle U Rarasku - oba sdili dvur."},
-  {id:17, name:"U Hrocha",             addr:"Thunova 10, Mala Strana",            hours:"12:00-23:00",               beer:"Prazdroj, vzorne osetrenym",   out:"stani u okna / chodniku",         lat:50.0892,   lng:14.4032,   f:220,a:90,  type:"hist",    note:"Mala, nacpana, autenticka. Pivo vynikajici."},
+  {id:9,  name:"U Pinkasku",           addr:"Jungmannovo nam. 16, Nove Mesto",    hours:"10:00-22:30",               beer:"Nepast. Prazdroj od 1843",     out:"goticka zahrada (jaro-podzim)",   lat:50.0832,   lng:14.4233,   f:170,a:100, type:"zahradka",    note:"Prvni hospoda v Praze kde se zacala cepovat plzen - od roku 1843."},
+  {id:10, name:"Malostranska beseda",  addr:"Malostranske nam. 21, Mala Strana", hours:"denne 11:00-23:00",          beer:"Tankovy Prazdroj",             out:"predzahradka v podloubi 48 mist", lat:50.0883,   lng:14.4048,   f:160,a:100, type:"zahradka",    note:"PUOR koncept. Primo na Malostranskkem namesti."},
+  {id:11, name:"Mincovna",             addr:"Staromestske nam. 7, Praha 1",       hours:"denne 11:30-23:00",          beer:"Tankovy Prazdroj",             out:"zahradka na Staromaku",           lat:50.0878,   lng:14.4213,   f:200,a:180, type:"zahradka",    note:"Jedina restaurace na Staromaku primarne pro mistni."},
+  {id:12, name:"U Zlateho slona",      addr:"Havelska 9, Stare Mesto",            hours:"denne 11:00-23:00",          beer:"Tankovy Prazdroj",             out:"celorocni zahradka u Havelaku",   lat:50.0855,   lng:14.4218,   f:180,a:90,  type:"zahradka",    note:"100 piv = vlastni slon na stene se jmenem. Celorocni zahradka - i v prosinci."},
+  {id:13, name:"U Dvou kocek",         addr:"Uhelny trh 10, Stare Mesto",         hours:"denne 11:00-23:00",          beer:"Tankovy Prazdroj",             out:"celorocni zahradka",              lat:50.0843,   lng:14.4204,   f:200,a:90,  type:"zahradka",    note:"Od 1678. Venkovni zahradka funguje celorocne, cepuji i snyt a mliko."},
+  {id:14, name:"U Kocoura",            addr:"Nerudova 2, Mala Strana",            hours:"denne 12:00-22:30",          beer:"Prazdroj + Kozel",             out:"stani na schodech a chodniku",    lat:50.0887,   lng:14.4020,   f:210,a:100, type:"mokrej",    note:"130 m od Hrocha. Levne pivo, lide si chodí stat ven. Jen hotove."},
+  {id:15, name:"U Rarasku",            addr:"Mikulandska 7, Nove Mesto",          hours:"denne 15:00-02:00",          beer:"Tank.Prazdroj + Zvikov",       out:"kryta zahradka ve vnitrobloku",   lat:50.08153,  lng:14.41784,  f:180,a:80,  type:"zahradka",    note:"Velka zahradka (60 mist + 40 na stani), v lete ziva hudba."},
+  {id:16, name:"U Buldoga",            addr:"Mikulandska 7, Nove Mesto",          hours:"Ut-So 15-02 / Ne 15-00",     beer:"Prazdroj + Zvikov",            out:"sdilena zahradka s Rarasky",      lat:50.08151,  lng:14.41772,  f:180,a:80,  type:"zahradka",    note:"Prestehoval ze Smichova hned vedle U Rarasku - oba sdili dvur."},
+  {id:17, name:"U Hrocha",             addr:"Thunova 10, Mala Strana",            hours:"12:00-23:00",               beer:"Prazdroj, vzorne osetrenym",   out:"stani u okna / chodniku",         lat:50.0892,   lng:14.4032,   f:220,a:90,  type:"mokrej",    note:"Mala, nacpana, autenticka. Pivo vynikajici."},
   // DALSI
-  {id:18, name:"PULT",                 addr:"V Celnici 4, Nove Mesto",            hours:"denne 15:00-01:00",          beer:"6 cepu svetle lezaky",         out:"stani u vstupu",                  lat:50.0889,   lng:14.4305,   f:160,a:100, type:"dalsi",   note:""},
-  {id:19, name:"Hostinec Na Slamniku", addr:"Wolkerova 12, Bubenec",              hours:"11:30-23:00",               beer:"Cepovana plzen",               out:"zahrada pod lipou",               lat:50.1008,   lng:14.3972,   f:180,a:140, type:"dalsi",   note:""},
-  {id:20, name:"U Cerneho vola",       addr:"Loretanske nam. 1, Hradcany",        hours:"10:00-22:00",               beer:"Kozel na cepu",                out:"zahradka na namesti",             lat:50.0920,   lng:14.3917,   f:180,a:180, type:"dalsi",   note:"Nejlevnejsi pivo u Hradu. Jen hotove."},
-  {id:21, name:"Hostinec Na Vytoni",   addr:"Rasinovo nabrezi 412, Praha 2",      hours:"denne 11:30-23:00",          beer:"Rohozec / Podskalak",          out:"zahradka u naplavky",             lat:50.0697,   lng:14.4166,   f:260,a:130, type:"dalsi",   note:"Historicka Podskalska celnice. Kachni speciality. Hodnoceni 4.8."},
-  {id:22, name:"U Veverky",            addr:"Eliasova 14, Bubenec",               hours:"denne 11:00-23:30",          beer:"Tankovy Prazdroj",             out:"zahradka",                        lat:50.1003,   lng:14.3928,   f:200,a:130, type:"dalsi",   note:"Dejvicka klasika. Byva plno, pivo osetrenem vyborne."},
+  {id:18, name:"PULT",                 addr:"V Celnici 4, Nove Mesto",            hours:"denne 15:00-01:00",          beer:"6 cepu svetle lezaky",         out:"stani u vstupu",                  lat:50.0889,   lng:14.4305,   f:160,a:100, type:"mokrej",   note:""},
+  {id:20, name:"U Cerneho vola",       addr:"Loretanske nam. 1, Hradcany",        hours:"10:00-22:00",               beer:"Kozel na cepu",                out:"zahradka na namesti",             lat:50.0920,   lng:14.3917,   f:180,a:180, type:"mokrej",   note:"Nejlevnejsi pivo u Hradu. Jen hotove."},
+  {id:21, name:"Hostinec Na Vytoni",   addr:"Rasinovo nabrezi 412, Praha 2",      hours:"denne 11:30-23:00",          beer:"Rohozec / Podskalak",          out:"zahradka u naplavky",             lat:50.0697,   lng:14.4166,   f:260,a:130, type:"zahradka",   note:"Historicka Podskalska celnice. Kachni speciality. Hodnoceni 4.8."},
+  {id:22, name:"U Veverky",            addr:"Eliasova 14, Bubenec",               hours:"denne 11:00-23:30",          beer:"Tankovy Prazdroj",             out:"zahradka",                        lat:50.1003,   lng:14.3928,   f:200,a:130, type:"zahradka",   note:"Dejvicka klasika. Byva plno, pivo osetrenem vyborne."},
 ];
 
-var TL = {lokal:"LOKAL", pivovar:"PIVOVAR", hist:"HISTORICKA", dalsi:"OSTATNI"};
+var TL = {zahradka:"ZAHRÁDKA", lokal:"LOKÁL", pivovar:"PIVOVAR", mokrej:"MOKREJ LOKET"};
 var CATS = [
-  {k:"lokal",   l:"LOKAL"},
-  {k:"pivovar", l:"PIVOVARSKE HOSPODY"},
-  {k:"hist",    l:"TANKOVY PRAZDROJ — HISTORICKE"},
-  {k:"dalsi",   l:"DALSI PIVA + VENKU"},
+  {k:"zahradka", l:"ZAHRÁDKA"},
+  {k:"lokal",    l:"LOKÁLY"},
+  {k:"pivovar",  l:"PIVOVARY"},
+  {k:"mokrej",   l:"MOKREJ LOKET"},
 ];
 
 // ── STATE ────────────────────────────────────────────────────────────────────
@@ -353,7 +350,7 @@ function toggleShade() {
   var btn = document.getElementById('btn-shade');
   var sw  = document.getElementById('slwrap');
   if (!shOn) {
-    btn.textContent = 'NACITAM...';
+    btn.textContent = 'NAČÍTÁM...';
     btn.disabled = true;
     tryInitShade(function(ok) {
       btn.disabled = false;
@@ -361,15 +358,15 @@ function toggleShade() {
         shade.addTo(map);
         shOn = true;
         btn.classList.add('on');
-        btn.textContent = 'STINY ZAP';
+        btn.textContent = 'STÍNY ZAP';
         sw.classList.add('on');
         var now = new Date();
         var mins = now.getHours()*60 + now.getMinutes();
         document.getElementById('slr').value = mins;
         onSlider(mins);
       } else {
-        btn.textContent = 'STINY (nedostupne)';
-        setTimeout(function(){ btn.textContent='STINY'; }, 3000);
+        btn.textContent = 'STÍNY (nedostupne)';
+        setTimeout(function(){ btn.textContent='STÍNY'; }, 3000);
       }
     });
   } else {
@@ -377,7 +374,7 @@ function toggleShade() {
     if (playing) stopPlay();
     shOn = false;
     btn.classList.remove('on');
-    btn.textContent = 'STINY';
+    btn.textContent = 'STÍNY';
     sw.classList.remove('on');
   }
 }
@@ -443,7 +440,7 @@ function getWx(d) {
 // ── STATUS ───────────────────────────────────────────────────────────────────
 function getSt(p, d) {
   var w = getWx(d);
-  if (w && ((w.prec!=null&&w.prec>0.1)||(w.pp!=null&&w.pp>=70))) return 'rain';
+  // dest ignorujeme - nikdo ven nepujde
   var pos = SC.getPosition(d, p.lat, p.lng);
   var alt = pos.altitude * 180/Math.PI;
   if (alt < 2) return 'set';
@@ -457,12 +454,11 @@ function getSt(p, d) {
 }
 
 var SM = {
-  sunny:   {l:'SVITI',    c:'#C13B1B', d:'#F7C325'},
-  partial: {l:'CASTECNE', c:'#7A5A00', d:'#D4A017'},
-  cloudy:  {l:'ZATAZENO', c:'#555',    d:'#bbb'},
-  shady:   {l:'STIN',     c:'#444',    d:'#888'},
-  rain:    {l:'PRSI',     c:'#1A56A0', d:'#4A90D9'},
-  set:     {l:'ZAPAD',    c:'#bbb',    d:'#555'},
+  sunny:   {l:'SVÍTÍ',    c:'#F7C325', d:'#F7C325'},
+  partial: {l:'ČÁSTEČNĚ', c:'#D4A017', d:'#D4A017'},
+  cloudy:  {l:'ZATAŽENO', c:'#555',    d:'#bbb'},
+  shady:   {l:'STÍN',     c:'#444',    d:'#888'},
+  set:     {l:'ZÁPAD',    c:'#bbb',    d:'#555'},
 };
 
 // ── PINS ─────────────────────────────────────────────────────────────────────
@@ -488,7 +484,7 @@ function updMkrs() {
     mkrs[p.id].s = s;
     c[s]++;
   });
-  var map_k = {s:'sunny', p:'partial', c:'cloudy', r:'rain'};
+  var map_k = {s:'sunny', c:'cloudy'};
   Object.keys(map_k).forEach(function(k) {
     var key = map_k[k];
     document.getElementById('cnt-'+k).textContent = c[key];
@@ -520,7 +516,8 @@ function openSheet(id) {
   document.getElementById('sh-hours').textContent = p.hours;
   var sb = document.getElementById('sh-st');
   sb.textContent = m.l;
-  sb.style.background = s==='sunny'?'#F7C325': s==='partial'?'rgba(212,160,23,0.2)': s==='rain'?'rgba(74,144,217,0.15)':'transparent';
+  sb.style.background = 'transparent';
+  sb.style.color = s==='sunny'?'#F7C325': s==='partial'?'#D4A017': s==='cloudy'?'#888':'#444';
   document.getElementById('s-alt').textContent  = (pos.altitude*180/Math.PI).toFixed(1)+'°';
   document.getElementById('s-set').textContent  = ftm(ti.sunset);
   document.getElementById('s-cld').textContent  = clt(w?w.cloud:null);
