@@ -606,7 +606,7 @@ function renderList() {
         +'<div><div class="lnum">'+String(p.id).padStart(2,'0')+'</div><div class="lbar" style="background:'+m.d+'"></div></div>'
         +'<div class="lbody"><div class="lname">'+p.name+'</div><div class="ladr">'+p.addr+'</div>'
         +'<div class="lout">'+p.out+' &middot; '+p.beer+'</div>'
-        +'<span class="lst" style="color:'+m.c+'">'+m.l+'</span>'+(ex?'<span class="lex">'+ex+'</span>':'')+distLabel+(userLat!=null?'<span class="lex">'+fmtDist(distanceTo(p.lat,p.lng))+'</span>':'')
+        +'<span class="lst" style="color:'+m.c+'">'+m.l+'</span>'+(ex?'<span class="lex">'+ex+'</span>':'')+distLabel
         +'</div></div>';
     });
   });
