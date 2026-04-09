@@ -25,7 +25,7 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 #hdr-top::-webkit-scrollbar{display:none;}
 .hc{padding:6px 11px;border-right:1px solid rgba(13,13,13,0.15);display:flex;flex-direction:column;justify-content:center;font-size:0.57rem;line-height:1.7;flex-shrink:0;}
 .hc .lb{color:var(--mid);text-transform:uppercase;letter-spacing:1px;}
-.hc .vl{font-weight:700;}
+.hc .vl{font-weight:700;display:block;line-height:1.2;}
 #logo{padding:7px 13px;border-right:var(--rule);display:flex;align-items:center;gap:9px;flex-shrink:0;}
 #logo span{font-family:var(--display);font-size:1.65rem;letter-spacing:2px;line-height:1;}
 #sdot{width:21px;height:21px;border-radius:50%;border:var(--rule);background:var(--sun);flex-shrink:0;transition:background 0.5s;}
@@ -34,11 +34,9 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 #btn-rt{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 11px;background:var(--paper);color:var(--ink);border:none;border-right:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-rt.off{background:transparent;color:var(--ink);}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
-#btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
-#btn-map:hover{background:var(--sun);}
 #btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;margin-left:auto;white-space:nowrap;flex-shrink:0;}
 #btn-lst:hover{background:var(--sun);}
-.cnt-s{color:var(--sun);-webkit-text-stroke:1px var(--ink);font-size:1.1rem!important;}
+.cnt-s{color:var(--sun);-webkit-text-stroke:1px var(--ink);font-size:1.1rem!important;vertical-align:middle;}
 .cnt-p{color:var(--amber);font-size:1.1rem!important;}
 .cnt-c{color:var(--mid);font-size:1.1rem!important;}
 .cnt-r{color:var(--rain);font-size:1.1rem!important;}
@@ -102,10 +100,6 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 .pin-rain{background:var(--rain);}
 .pin-set{background:#444;}
 
-/* LOCATION BUTTON */
-#btn-loc{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:7px 11px;background:var(--ink);color:var(--paper);border:var(--rule);cursor:pointer;white-space:nowrap;}
-#btn-loc:hover{background:#333;}
-#btn-loc.active{background:var(--ink);color:var(--sun);}
 
 /* BOTTOM LEFT CONTROLS */
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
@@ -148,15 +142,15 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
   <div id="hdr-top">
     <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVÍTÍ</span></div>
     <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
-    <div class="hc"><span class="lb">Slunce</span><span class="vl" id="hs">-</span></div>
+    <div class="hc"><span class="lb">Výška</span><span class="vl" id="hs">-</span></div>
     <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
     <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataženo</span><span class="vl cnt-c" id="cnt-c">0</span></div>
   </div>
   <div id="hdr-bot">
     <button id="btn-rt" onclick="goRT()">&#9201; TEĎ ŽIVĚ</button>
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
-    <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
+    <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
   </div>
 </div>
 
@@ -201,7 +195,6 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 <div id="ctl">
   <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
   <button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>
-  <button class="cbtn" id="btn-loc" onclick="locateMe()">&#9679; POLOHA</button>
 </div>
 
 <div id="slwrap">
