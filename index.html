@@ -34,11 +34,13 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 #btn-rt{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 11px;background:var(--paper);color:var(--ink);border:none;border-right:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-rt.off{background:transparent;color:var(--ink);}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
-#btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;margin-left:auto;white-space:nowrap;flex-shrink:0;}
+#btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
-.cnt-s{color:var(--sun);-webkit-text-stroke:1px var(--ink);font-size:1.1rem!important;vertical-align:middle;}
-.cnt-p{color:var(--amber);font-size:1.1rem!important;}
-.cnt-c{color:var(--mid);font-size:1.1rem!important;}
+.cnt-s{color:var(--sun);-webkit-text-stroke:1px var(--ink);font-size:0.75rem!important;}
+.cnt-p{color:var(--amber);font-size:0.75rem!important;}
+.cnt-c{color:var(--mid);font-size:0.75rem!important;}
 .cnt-r{color:var(--rain);font-size:1.1rem!important;}
 
 /* LIST */
@@ -316,16 +318,23 @@ function startGeo() {
 
 function reqGeo() {
   var btn = document.getElementById('btn-geo');
-  if (!navigator.geolocation) { btn.textContent = 'GPS nedostupná'; return; }
-  btn.textContent = '⏳ HLEDÁM...';
-  navigator.geolocation.getCurrentPosition(function(pos) {
-    userLat = pos.coords.latitude;
-    userLng = pos.coords.longitude;
-    btn.textContent = '✓ POLOHA';
-    btn.classList.add('on');
-    if (document.getElementById('list').classList.contains('open')) renderList();
-  }, function(err) {
-    btn.textContent = '✗ POLOHA';
+  if (!navigator.geolocation) { btn.textContent = 'GPS N/A'; return; }
+  btn.textContent = 'HLEDÁM...';
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      userLat = pos.coords.latitude;
+      userLng = pos.coords.longitude;
+      btn.textContent = 'POLOHA OK';
+      btn.classList.add('on');
+      updAll();
+    },
+    function(err) {
+      btn.textContent = 'POLOHA';
+      btn.classList.remove('on');
+    },
+    {enableHighAccuracy:false, timeout:15000, maximumAge:300000}
+  );
+}✗ POLOHA';
     console.warn('GPS:', err.message);
   }, {enableHighAccuracy:true, timeout:10000});
 }
