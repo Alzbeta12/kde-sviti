@@ -635,9 +635,6 @@ function renderList() {
     items.forEach(function(p) {
       var m=SM[p.s], w=getWx(cDate), ex='';
       var distLabel = userLat !== null ? '<span class="lex">'+fmtDist(getDistance(userLat,userLng,p.lat,p.lng))+'</span>' : '';
-      if (w&&p.s==='rain') ex = w.prec>0.1 ? w.prec.toFixed(1)+' mm/h' : (w.pp||0)+'% prsi';
-      else if (w&&w.pp>=40) ex = 'dest '+w.pp+'%';
-      else if (w&&w.cloud!=null) ex = w.cloud+'%';
       html += '<div class="lrow" onclick="selList('+p.id+')">'
         +'<div><div class="lnum">'+String(p.id).padStart(2,'0')+'</div><div class="lbar" style="background:'+m.d+'"></div></div>'
         +'<div class="lbody"><div class="lname">'+p.name+'</div><div class="ladr">'+p.addr+'</div>'
