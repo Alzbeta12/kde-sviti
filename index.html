@@ -103,6 +103,15 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 .pin-set{background:#444;}
 
 
+/* USER LOCATION PIN */
+.user-pin {
+  width: 16px; height: 16px;
+  background: #2E86FF;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #2E86FF, 0 2px 8px rgba(0,0,0,0.3);
+}
+
 /* BOTTOM LEFT CONTROLS */
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
 .cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:7px 11px;background:var(--ink);color:var(--paper);border:var(--rule);cursor:pointer;white-space:nowrap;}
@@ -273,6 +282,7 @@ var cDate = new Date();
 var isRT  = true;
 var userLat = null;
 var userLng = null;
+var userMarker = null;
 var wCache = null;
 var shade = null;
 var shOn  = false;
@@ -326,6 +336,12 @@ function reqGeo() {
       userLng = pos.coords.longitude;
       btn.textContent = 'POLOHA OK';
       btn.classList.add('on');
+      // Pridat/aktualizovat pin polohy
+      if (userMarker) map.removeLayer(userMarker);
+      userMarker = L.marker([pos.coords.latitude, pos.coords.longitude], {
+        icon: L.divIcon({className:'', html:'<div class="user-pin"></div>', iconSize:[16,16], iconAnchor:[8,8]})
+      }).addTo(map);
+      map.panTo([pos.coords.latitude, pos.coords.longitude], {animate:true});
       updAll();
     },
     function(err) {
