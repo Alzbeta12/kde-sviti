@@ -103,6 +103,41 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 .pin-set{background:#444;}
 
 
+/* NAVIGATE BUTTON */
+#sh-nav-btn {
+  display:block; width:100%; padding:10px; margin-bottom:12px;
+  background:var(--ink); color:var(--sun);
+  font-family:var(--font); font-size:0.65rem; font-weight:700; letter-spacing:1px;
+  border:none; cursor:pointer; text-align:center; text-decoration:none;
+}
+#sh-nav-btn:hover { background:#222; }
+
+/* SUN WINDOW */
+#sh-sun-window {
+  font-size:0.62rem; color:var(--ink); font-weight:700;
+  margin-bottom:10px; padding:8px 10px;
+  background:#F7C325; border:var(--rule);
+}
+#sh-sun-window.no-sun {
+  background:transparent; color:var(--mid);
+}
+
+/* TIMELINE */
+#sh-timeline { margin-bottom:12px; }
+.tl-day { font-size:0.5rem; color:var(--mid); letter-spacing:1px; margin-bottom:4px; text-transform:uppercase; }
+.tl-hours { display:flex; gap:2px; flex-wrap:wrap; }
+.tl-slot {
+  width:28px; height:28px; display:flex; align-items:center; justify-content:center;
+  font-size:0.55rem; border:1px solid rgba(13,13,13,0.1); flex-direction:column;
+  flex-shrink:0;
+}
+.tl-slot .tl-h { font-size:0.45rem; color:var(--mid); }
+.tl-slot.sunny   { background:#F7C325; border-color:#D4A017; }
+.tl-slot.partial { background:#D4A017; border-color:#B8860B; }
+.tl-slot.cloudy  { background:#e8e0d4; }
+.tl-slot.shady   { background:#ccc; }
+.tl-slot.night   { background:#e0d8cc; opacity:0.4; }
+
 /* USER LOCATION PIN */
 .user-pin {
   width: 16px; height: 16px;
@@ -189,6 +224,9 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
     </div>
     <div id="sh-badge"></div>
     <div id="sh-name"></div>
+    <a id="sh-nav-btn" href="#" target="_blank">&#9655; NAVIGOVAT V GOOGLE MAPS</a>
+    <div id="sh-sun-window"></div>
+    <div id="sh-timeline"></div>
     <div id="sh-addr"></div>
     <div id="sh-hours"></div>
     <div id="sh-st"></div>
@@ -571,6 +609,100 @@ function updMkrs() {
   if (document.getElementById('list').classList.contains('open')) renderList();
 }
 
+// ── SUN WINDOW & TIMELINE ────────────────────────────────────────────────────
+function getSunWindow(p, date) {
+  // Najit nejblizsi okno kdy sviti (dnes)
+  var d = new Date(date);
+  d.setMinutes(0,0,0);
+  var sunnyStart = null, sunnyEnd = null;
+  var now = date.getTime();
+
+  for (var i = 0; i < 24; i++) {
+    var t = new Date(d); t.setHours(i);
+    var st = getSt(p, t);
+    if (st === 'sunny' || st === 'partial') {
+      if (sunnyStart === null && t.getTime() >= now - 3600000) sunnyStart = new Date(t);
+      sunnyEnd = new Date(t);
+      sunnyEnd.setMinutes(59);
+    } else {
+      if (sunnyStart !== null && t.getTime() > now) break;
+    }
+  }
+  return {start: sunnyStart, end: sunnyEnd};
+}
+
+function renderSunWindow(p, date) {
+  var el = document.getElementById('sh-sun-window');
+  var w = getSunWindow(p, date);
+  var now = date;
+
+  if (!w.start && !w.end) {
+    // Zkusit najit zitra
+    var tomorrow = new Date(date); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(6,0,0,0);
+    var wt = getSunWindow(p, tomorrow);
+    if (wt.start) {
+      el.className = 'no-sun';
+      el.textContent = 'Sviti zitra od ' + p2(wt.start.getHours()) + ':00';
+    } else {
+      el.className = 'no-sun';
+      el.textContent = 'Dnes neni predpokladano slunce';
+    }
+    return;
+  }
+
+  el.className = '';
+  var curSt = getSt(p, now);
+  if (curSt === 'sunny' || curSt === 'partial') {
+    // Prave sviti - kdy skonci
+    var mins = Math.round((w.end.getTime() - now.getTime()) / 60000);
+    if (mins <= 0) { el.textContent = 'Prave sviti'; return; }
+    var h = Math.floor(mins/60), m = mins%60;
+    el.textContent = 'Sviti jeste ' + (h > 0 ? h + ' h ' : '') + m + ' min (do ' + p2(w.end.getHours()) + ':' + p2(w.end.getMinutes()) + ')';
+  } else {
+    // Zatim nesviti - kdy zacne
+    if (w.start) {
+      var mins2 = Math.round((w.start.getTime() - now.getTime()) / 60000);
+      if (mins2 > 0) {
+        var h2 = Math.floor(mins2/60), m2 = mins2%60;
+        el.textContent = 'Zacne svitit za ' + (h2 > 0 ? h2 + ' h ' : '') + m2 + ' min (v ' + p2(w.start.getHours()) + ':00)';
+      } else {
+        el.textContent = 'Sviti od ' + p2(w.start.getHours()) + ':00';
+      }
+    }
+  }
+}
+
+function renderTimeline(p, date) {
+  var el = document.getElementById('sh-timeline');
+  var html = '';
+  var days = [new Date(date), new Date(date)];
+  days[1].setDate(days[1].getDate() + 1);
+  var dayNames = ['Dnes', 'Zitra'];
+
+  days.forEach(function(day, di) {
+    var d = new Date(day); d.setHours(0,0,0,0);
+    html += '<div class="tl-day">' + dayNames[di] + '</div><div class="tl-hours">';
+    for (var h = 6; h < 22; h++) {
+      var t = new Date(d); t.setHours(h);
+      var pos = SC.getPosition(t, p.lat, p.lng);
+      var alt = pos.altitude * 180/Math.PI;
+      var cls = 'night';
+      if (alt > 2) {
+        var st = getSt(p, t);
+        cls = st === 'sunny' ? 'sunny' : st === 'partial' ? 'partial' : st === 'shady' ? 'shady' : 'cloudy';
+      }
+      // Zvyraznit aktualni hodinu
+      var isNow = (di === 0 && h === date.getHours());
+      html += '<div class="tl-slot ' + cls + (isNow ? '" style="border:2px solid var(--ink)' : '') + '">'
+           + '<span class="tl-h">' + p2(h) + '</span>'
+           + '</div>';
+    }
+    html += '</div>';
+    if (di === 0) html += '<div style="height:6px"></div>';
+  });
+  el.innerHTML = html;
+}
+
 // ── SHEET ────────────────────────────────────────────────────────────────────
 function openSheet(id) {
   var p = PLACES.filter(function(x){return x.id===id;})[0];
@@ -599,6 +731,18 @@ function openSheet(id) {
   document.getElementById('sh-beer').innerHTML  = '<b>Na čepu:</b> '+p.beer+' &middot; '+p.out+distStr;
   var ne = document.getElementById('sh-note');
   ne.textContent = p.note || ''; ne.style.display = p.note ? '' : 'none';
+  // Google Maps navigace
+  var navBtn = document.getElementById('sh-nav-btn');
+  if (userLat !== null) {
+    navBtn.href = 'https://www.google.com/maps/dir/' + userLat + ',' + userLng + '/' + p.lat + ',' + p.lng;
+  } else {
+    navBtn.href = 'https://www.google.com/maps/dir//' + p.lat + ',' + p.lng;
+  }
+
+  // Sun window a timeline
+  renderSunWindow(p, cDate);
+  renderTimeline(p, cDate);
+
   map.panTo([p.lat, p.lng], {animate:true});
   document.getElementById('sheet').classList.add('open');
 }
