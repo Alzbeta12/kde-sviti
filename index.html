@@ -237,7 +237,7 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
     </div>
     <div id="sh-badge"></div>
     <div id="sh-name"></div>
-    <a id="sh-nav-btn" href="#" target="_blank">&#9655; NAVIGOVAT V GOOGLE MAPS</a>
+    <a id="sh-nav-btn" href="#" target="_blank">&#9655; KUDY NA PIVO</a>
     <div id="sh-sun-window"></div>
     <div id="sh-timeline"></div>
     <div id="sh-tl-legend">
@@ -691,12 +691,34 @@ function renderSunWindow(p, date) {
   }
 }
 
+function getWxForHour(d) {
+  // Ziskat pocasi pro konkretni hodinu z hourly cache
+  if (!wCache || !wCache.hm) return wCache;
+  var k = hk(d);
+  return wCache.hm[k] || wCache;
+}
+
+function getStWithWx(p, d, wx) {
+  // getSt s explicitnim pocasim
+  if (wx && ((wx.prec!=null&&wx.prec>0.1)||(wx.pp!=null&&wx.pp>=70))) return 'rain';
+  var pos = SC.getPosition(d, p.lat, p.lng);
+  var alt = pos.altitude * 180/Math.PI;
+  if (alt < 2) return 'set';
+  var az = ((pos.azimuth*180/Math.PI)+180+360)%360;
+  var df = Math.abs(az - p.f); if (df > 180) df = 360-df;
+  if (p.a < 360 && df >= p.a/2) return 'shady';
+  if (!wx || wx.cloud==null) return 'sunny';
+  if (wx.cloud >= 80) return 'cloudy';
+  if (wx.cloud >= 40) return 'partial';
+  return 'sunny';
+}
+
 function renderTimeline(p, date) {
   var el = document.getElementById('sh-timeline');
   var html = '';
   var days = [new Date(date), new Date(date)];
   days[1].setDate(days[1].getDate() + 1);
-  var dayNames = ['Dnes', 'Zitra'];
+  var dayNames = ['Dnes', 'Zítra'];
 
   days.forEach(function(day, di) {
     var d = new Date(day); d.setHours(0,0,0,0);
@@ -707,10 +729,10 @@ function renderTimeline(p, date) {
       var alt = pos.altitude * 180/Math.PI;
       var cls = 'night';
       if (alt > 2) {
-        var st = getSt(p, t);
-        cls = st === 'sunny' ? 'sunny' : st === 'partial' ? 'partial' : st === 'shady' ? 'shady' : st === 'set' ? 'night' : 'cloudy';
+        var wx = getWxForHour(t);
+        var st = getStWithWx(p, t, wx);
+        cls = st === 'sunny' ? 'sunny' : st === 'partial' ? 'partial' : st === 'shady' ? 'shady' : st === 'rain' ? 'cloudy' : 'cloudy';
       }
-      // Zvyraznit aktualni hodinu
       var isNow = (di === 0 && h === date.getHours());
       html += '<div class="tl-slot ' + cls + (isNow ? '" style="border:2px solid var(--ink)' : '') + '">'
            + '<span class="tl-h">' + p2(h) + '</span>'
