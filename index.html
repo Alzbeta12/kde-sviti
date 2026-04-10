@@ -334,7 +334,6 @@ function reqGeo() {
     function(pos) {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
-      console.log('POLOHA:', userLat, userLng);
       btn.textContent = 'POLOHA OK';
       btn.classList.add('on');
       // Pridat/aktualizovat pin polohy
@@ -636,7 +635,7 @@ function renderList() {
     items.forEach(function(p) {
       var m=SM[p.s], w=getWx(cDate), ex='';
       var d_km = userLat !== null ? getDistance(userLat,userLng,p.lat,p.lng) : null;
-      if (d_km !== null) console.log(p.name, 'dist:', d_km, typeof d_km, 'round:', Math.round(d_km*1000), 'fmtDist:', fmtDist(d_km));
+
       var distLabel = d_km !== null ? '<span class="lex">'+fmtDist(d_km)+'</span>' : '';
       html += '<div class="lrow" onclick="selList('+p.id+')">'
         +'<div><div class="lnum">'+String(p.id).padStart(2,'0')+'</div><div class="lbar" style="background:'+m.d+'"></div></div>'
@@ -721,10 +720,7 @@ function distanceTo(lat, lng) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-function fmtDist(m) {
-  if (m > 999) return (m/1000).toFixed(1)+' km';
-  return Math.round(m)+' m';
-}
+
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('dt').value = toISO(cDate);
