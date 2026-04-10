@@ -134,9 +134,22 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
 .tl-slot .tl-h { font-size:0.45rem; color:var(--mid); }
 .tl-slot.sunny   { background:#F7C325; border-color:#D4A017; }
 .tl-slot.partial { background:#D4A017; border-color:#B8860B; }
-.tl-slot.cloudy  { background:#e8e0d4; }
-.tl-slot.shady   { background:#ccc; }
-.tl-slot.night   { background:#e0d8cc; opacity:0.4; }
+.tl-slot.cloudy  { background:#d8d8d8; border-color:#bbb; }
+.tl-slot.shady   { background:#888; border-color:#666; }
+.tl-slot.set     { background:#888; border-color:#666; }
+.tl-slot.night   { background:#e8e4de; border-color:rgba(13,13,13,0.05); opacity:0.5; }
+
+/* TIMELINE LEGENDA */
+#sh-tl-legend {
+  display:flex; gap:10px; flex-wrap:wrap;
+  font-family:var(--font); font-size:0.5rem; letter-spacing:0.5px;
+  margin-top:4px; margin-bottom:12px; color:var(--mid);
+}
+.tll { display:flex; align-items:center; gap:3px; }
+.tll.sunny   { color:#C8A000; }
+.tll.partial { color:#A07800; }
+.tll.cloudy  { color:#999; }
+.tll.shady   { color:#555; }
 
 /* USER LOCATION PIN */
 .user-pin {
@@ -227,6 +240,12 @@ html,body{height:100%;overflow:hidden;background:#e8e0d4;}
     <a id="sh-nav-btn" href="#" target="_blank">&#9655; NAVIGOVAT V GOOGLE MAPS</a>
     <div id="sh-sun-window"></div>
     <div id="sh-timeline"></div>
+    <div id="sh-tl-legend">
+      <span class="tll sunny">&#9679; SVÍTÍ</span>
+      <span class="tll partial">&#9679; ČÁSTEČNĚ</span>
+      <span class="tll cloudy">&#9675; ZATAŽENO</span>
+      <span class="tll shady">&#9679; STÍN</span>
+    </div>
     <div id="sh-addr"></div>
     <div id="sh-hours"></div>
     <div id="sh-st"></div>
@@ -689,7 +708,7 @@ function renderTimeline(p, date) {
       var cls = 'night';
       if (alt > 2) {
         var st = getSt(p, t);
-        cls = st === 'sunny' ? 'sunny' : st === 'partial' ? 'partial' : st === 'shady' ? 'shady' : 'cloudy';
+        cls = st === 'sunny' ? 'sunny' : st === 'partial' ? 'partial' : st === 'shady' ? 'shady' : st === 'set' ? 'night' : 'cloudy';
       }
       // Zvyraznit aktualni hodinu
       var isNow = (di === 0 && h === date.getHours());
