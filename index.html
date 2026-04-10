@@ -334,6 +334,7 @@ function reqGeo() {
     function(pos) {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
+      console.log('POLOHA:', userLat, userLng);
       btn.textContent = 'POLOHA OK';
       btn.classList.add('on');
       // Pridat/aktualizovat pin polohy
@@ -634,7 +635,9 @@ function renderList() {
     html += '<div class="cat-lbl">'+cat.l+'</div>';
     items.forEach(function(p) {
       var m=SM[p.s], w=getWx(cDate), ex='';
-      var distLabel = userLat !== null ? '<span class="lex">'+fmtDist(getDistance(userLat,userLng,p.lat,p.lng))+'</span>' : '';
+      var d_km = userLat !== null ? getDistance(userLat,userLng,p.lat,p.lng) : null;
+      if (d_km !== null) console.log(p.name, 'dist:', d_km.toFixed(3), 'km', 'from', userLat, userLng, 'to', p.lat, p.lng);
+      var distLabel = d_km !== null ? '<span class="lex">'+fmtDist(d_km)+'</span>' : '';
       html += '<div class="lrow" onclick="selList('+p.id+')">'
         +'<div><div class="lnum">'+String(p.id).padStart(2,'0')+'</div><div class="lbar" style="background:'+m.d+'"></div></div>'
         +'<div class="lbody"><div class="lname">'+p.name+'</div><div class="ladr">'+p.addr+'</div>'
