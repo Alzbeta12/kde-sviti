@@ -636,7 +636,7 @@ function renderList() {
     items.forEach(function(p) {
       var m=SM[p.s], w=getWx(cDate), ex='';
       var d_km = userLat !== null ? getDistance(userLat,userLng,p.lat,p.lng) : null;
-      if (d_km !== null) console.log(p.name, 'dist:', d_km.toFixed(3), 'km', 'fmtDist:', fmtDist(d_km), 'from', userLat, userLng, 'to', p.lat, p.lng);
+      if (d_km !== null) console.log(p.name, 'dist:', d_km, typeof d_km, 'round:', Math.round(d_km*1000), 'fmtDist:', fmtDist(d_km));
       var distLabel = d_km !== null ? '<span class="lex">'+fmtDist(d_km)+'</span>' : '';
       html += '<div class="lrow" onclick="selList('+p.id+')">'
         +'<div><div class="lnum">'+String(p.id).padStart(2,'0')+'</div><div class="lbar" style="background:'+m.d+'"></div></div>'
