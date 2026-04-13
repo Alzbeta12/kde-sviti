@@ -501,7 +501,7 @@ function toggleShade() {
       }
     });
   } else {
-    if (shade) shade.remove();
+    try { if (shade) { shade.remove(); shade = null; } } catch(e) {}
     if (playing) stopPlay();
     shOn = false;
     btn.classList.remove('on');
