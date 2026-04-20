@@ -638,15 +638,15 @@ function updMkrs() {
 
 // ── SUN WINDOW & TIMELINE ────────────────────────────────────────────────────
 function getSunWindow(p, date) {
-  // Najit nejblizsi okno kdy sviti (dnes)
-  var d = new Date(date);
-  d.setMinutes(0,0,0);
+  // Najit nejblizsi okno kdy sviti (dnes) - pouzit hourly weather data
+  var d = new Date(date); d.setMinutes(0,0,0);
   var sunnyStart = null, sunnyEnd = null;
   var now = date.getTime();
 
   for (var i = 0; i < 24; i++) {
     var t = new Date(d); t.setHours(i);
-    var st = getSt(p, t);
+    var wx = getWxForHour(t);
+    var st = getStWithWx(p, t, wx);
     if (st === 'sunny' || st === 'partial') {
       if (sunnyStart === null && t.getTime() >= now - 3600000) sunnyStart = new Date(t);
       sunnyEnd = new Date(t);
@@ -669,10 +669,10 @@ function renderSunWindow(p, date) {
     var wt = getSunWindow(p, tomorrow);
     if (wt.start) {
       el.className = 'no-sun';
-      el.textContent = 'Sviti zitra od ' + p2(wt.start.getHours()) + ':00';
+      el.textContent = 'Svítí zítra od ' + p2(wt.start.getHours()) + ':00';
     } else {
       el.className = 'no-sun';
-      el.textContent = 'Dnes neni predpokladano slunce';
+      el.textContent = 'Dnes není předpokládáno slunce';
     }
     return;
   }
@@ -682,18 +682,18 @@ function renderSunWindow(p, date) {
   if (curSt === 'sunny' || curSt === 'partial') {
     // Prave sviti - kdy skonci
     var mins = Math.round((w.end.getTime() - now.getTime()) / 60000);
-    if (mins <= 0) { el.textContent = 'Prave sviti'; return; }
+    if (mins <= 0) { el.textContent = 'Právě svítí'; return; }
     var h = Math.floor(mins/60), m = mins%60;
-    el.textContent = 'Sviti jeste ' + (h > 0 ? h + ' h ' : '') + m + ' min (do ' + p2(w.end.getHours()) + ':' + p2(w.end.getMinutes()) + ')';
+    el.textContent = 'Svítí ještě ' + (h > 0 ? h + ' h ' : '') + m + ' min (do ' + p2(w.end.getHours()) + ':' + p2(w.end.getMinutes()) + ')';
   } else {
     // Zatim nesviti - kdy zacne
     if (w.start) {
       var mins2 = Math.round((w.start.getTime() - now.getTime()) / 60000);
       if (mins2 > 0) {
         var h2 = Math.floor(mins2/60), m2 = mins2%60;
-        el.textContent = 'Zacne svitit za ' + (h2 > 0 ? h2 + ' h ' : '') + m2 + ' min (v ' + p2(w.start.getHours()) + ':00)';
+        el.textContent = 'Začne svítit za ' + (h2 > 0 ? h2 + ' h ' : '') + m2 + ' min (v ' + p2(w.start.getHours()) + ':00)';
       } else {
-        el.textContent = 'Sviti od ' + p2(w.start.getHours()) + ':00';
+        el.textContent = 'Svítí od ' + p2(w.start.getHours()) + ':00';
       }
     }
   }
