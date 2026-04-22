@@ -38,9 +38,9 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
-.cnt-s{color:#0D0D0D;}
-.cnt-p{color:#0D0D0D;}
-.cnt-c{color:#0D0D0D;}
+.cnt-s{color:var(--ink);}
+.cnt-p{color:var(--ink);}
+.cnt-c{color:var(--ink);}
 .cnt-r{color:var(--rain);font-size:1.1rem!important;}
 
 /* LIST */
@@ -48,12 +48,12 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #list.open{transform:translateX(0);}
 #list-hdr{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(13,13,13,0.1);gap:12px;flex-shrink:0;}
 #list-hdr h2{font-family:var(--display);font-size:1.2rem;letter-spacing:2px;flex:1;min-width:0;}
-.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);border:var(--rule);cursor:pointer;white-space:nowrap;}
+.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;}
 .lhb:hover{background:var(--sun);}
 #list-fil{display:flex;border-bottom:1px solid rgba(13,13,13,0.1);overflow-x:auto;scrollbar-width:none;flex-shrink:0;-webkit-overflow-scrolling:touch;}
 #list-fil::-webkit-scrollbar{display:none;}
 .fb{font-family:var(--font);font-size:0.65rem;padding:10px 12px;background:transparent;color:var(--ink);border:none;border-right:1px solid rgba(13,13,13,0.12);cursor:pointer;white-space:nowrap;flex-shrink:0;}
-.fb.on{background:var(--ink);font-weight:700;}
+.fb.on{background:var(--ink);color:var(--sun);font-weight:700;}
 #list-sc{flex:1;overflow-y:auto;}
 #list-sc::-webkit-scrollbar{width:3px;}
 #list-sc::-webkit-scrollbar-thumb{background:var(--ink);}
@@ -109,7 +109,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 /* NAVIGATE BUTTON */
 #sh-nav-btn {
   display:block; width:100%; padding:10px; margin-bottom:12px;
-  background:var(--ink); 
+  background:var(--ink); color:var(--sun);
   font-family:var(--font); font-size:0.65rem; font-weight:700; letter-spacing:1px;
   border:none; cursor:pointer; text-align:center; text-decoration:none;
 }
@@ -167,7 +167,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
 .cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:7px 11px;background:var(--ink);color:var(--paper);border:var(--rule);cursor:pointer;white-space:nowrap;}
 .cbtn:hover{background:var(--sun);}
-.cbtn.on{background:var(--ink);}
+.cbtn.on{background:var(--ink);color:var(--sun);}
 
 /* TIME SLIDER */
 #slwrap{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:700;background:var(--paper);border:var(--rule);padding:10px 14px 8px;font-family:var(--font);width:min(360px,calc(100vw - 140px));display:none;box-shadow:0 4px 16px rgba(0,0,0,0.14);}
@@ -176,7 +176,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #sl-lbl{font-family:var(--display);font-size:1.3rem;letter-spacing:2px;}
 #btn-play{font-family:var(--font);font-size:0.57rem;font-weight:700;letter-spacing:1px;padding:4px 10px;background:transparent;border:var(--rule);cursor:pointer;}
 #btn-play:hover{background:var(--sun);}
-#btn-play.on{background:var(--ink);}
+#btn-play.on{background:var(--ink);color:var(--sun);}
 #slr{width:100%;-webkit-appearance:none;height:3px;background:var(--ink);outline:none;cursor:pointer;margin-bottom:4px;}
 #slr::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--sun);border:2px solid var(--ink);border-radius:50%;cursor:grab;}
 #slr::-moz-range-thumb{width:16px;height:16px;background:var(--sun);border:2px solid var(--ink);border-radius:50%;}
@@ -625,7 +625,7 @@ function updMkrs() {
   var map_k = {s:'sunny', c:'cloudy'};
   Object.keys(map_k).forEach(function(k) {
     var key = map_k[k];
-    document.getElementById('cnt-'+k).textContent = c[key];
+    document.getElementById('cnt-'+k).textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
     document.getElementById('hc-'+k).style.display = c[key] > 0 ? '' : 'none';
   });
   var sp  = SC.getPosition(cDate, 50.08, 14.42);
