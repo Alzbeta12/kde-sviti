@@ -61,7 +61,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .lrow{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;border-bottom:1px solid rgba(13,13,13,0.09);cursor:pointer;transition:background 0.08s;}
 .lrow:hover,.lrow:active{background:var(--sun);}
 .lbar{width:3px;height:30px;border:1px solid rgba(13,13,13,0.12);flex-shrink:0;margin-top:4px;}
-.lnum{font-size:0.49rem;color:#bbb;width:16px;text-align:center;margin-top:2px;}
+/* .lnum{font-size:0.49rem;color:#bbb;width:16px;text-align:center;margin-top:2px;}
 .lbody{flex:1;min-width:0;}
 .lname{font-weight:700;font-size:0.74rem;line-height:1.25;margin-bottom:2px;}
 .ladr{font-size:0.58rem;color:#999;margin-bottom:2px;}
@@ -832,7 +832,7 @@ function renderList() {
 
       var distLabel = d_km !== null ? '<span class="lex">'+fmtDist(d_km)+'</span>' : '';
       html += '<div class="lrow" onclick="selList('+p.id+')">'
-        +'<div><div class="lnum">'+String(p.id).padStart(2,'0')+'</div><div class="lbar" style="background:'+m.d+'"></div></div>'
+        +'<div><div class="lbar" style="background:'+m.d+'"></div></div>'
         +'<div class="lbody"><div class="lname">'+p.name+'</div><div class="ladr">'+p.addr+'</div>'
         +'<div class="lout">'+p.out+' &middot; '+p.beer+'</div>'
         +'<span class="lst" style="color:'+m.c+'">'+m.l+'</span>'+(ex?'<span class="lex">'+ex+'</span>':'')+distLabel
