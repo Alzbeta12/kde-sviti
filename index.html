@@ -57,7 +57,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #list-sc{flex:1;overflow-y:auto;}
 #list-sc::-webkit-scrollbar{width:3px;}
 #list-sc::-webkit-scrollbar-thumb{background:var(--ink);}
-.cat-lbl{padding:8px 12px 6px;font-size:0.65rem;letter-spacing:2px;color:var(--ink);font-weight:700;border-top:var(--rule);border-bottom:1px solid rgba(13,13,13,0.15);position:sticky;top:0;background:var(--paper);z-index:2;}
+.cat-lbl{padding:10px 16px 8px;font-size:0.6rem;letter-spacing:2px;color:#999;font-weight:600;border-bottom:1px solid rgba(13,13,13,0.07);position:sticky;top:0;background:var(--paper);z-index:2;text-transform:uppercase;}
 .lrow{display:flex;align-items:flex-start;gap:9px;padding:14px 16px;border-bottom:1px solid rgba(13,13,13,0.07);cursor:pointer;transition:background 0.08s;}
 .lrow:hover,.lrow:active{background:var(--sun);}
 .lbar{width:3px;height:30px;border:1px solid rgba(13,13,13,0.12);flex-shrink:0;margin-top:4px;}
@@ -837,7 +837,7 @@ function renderList() {
       var distLabel = d_km !== null ? '<span class="lex">'+fmtDist(d_km)+'</span>' : '';
       html += '<div class="lrow" onclick="selList('+p.id+')">'
         +'<div><div class="lbar" style="background:'+m.d+'"></div></div>'
-        +'<div class="lbody"><div class="lname" style="font-size:1.1rem;font-weight:900;color:#0D0D0D;margin-bottom:4px;">'+p.name+'</div><div class="ladr" style="font-size:0.58rem;color:#999;margin-bottom:2px;">'+p.addr+'</div>'
+        +'<div class="lbody"><div class="lname" style="font-size:1.1rem;font-weight:900;color:#0D0D0D;margin-bottom:4px;">'+p.name+'</div><div class="ladr" style="font-size:0.58rem;color:#444;margin-bottom:2px;">'+p.addr+'</div>'
         +'<div class="lout" style="font-size:0.58rem;color:#444;margin-bottom:6px;">'+p.out+' &middot; '+p.beer+'</div>'
         +'<span class="lst" style="color:'+m.c+';font-size:0.62rem;font-weight:700;">'+m.l+'</span>'+(ex?'<span class="lex">'+ex+'</span>':'')+distLabel
         +'</div></div>';
