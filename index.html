@@ -2,6 +2,9 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Kde sviti</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -132,19 +135,19 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .tl-slot {
   width:22px; height:22px; display:flex; align-items:center; justify-content:center;
   font-size:0.5rem; border:1px solid rgba(13,13,13,0.1); flex-direction:column;
-  flex-shrink:0;
+  flex-shrink:0; color:#444;
 }
 .tl-slot .tl-h { font-size:0.45rem; color:var(--mid); }
-.tl-slot.sunny   { background:#F7C325; border-color:#D4A017; }
-.tl-slot.partial { background:#D4A017; border-color:#B8860B; }
+.tl-slot.sunny   { background:#F7C325; border-color:#D4A017; color:#444; }
+.tl-slot.partial { background:#D4A017; border-color:#B8860B; color:#444; }
 .tl-slot.cloudy  { background:#d8d8d8; border-color:#bbb; color:#444; }
 .tl-slot.shady   { background:#888; border-color:#666; color:#ccc; }
-.tl-slot.set     { background:#888; border-color:#666; color:#ccc; }
-.tl-slot.night   { background:#e8e4de; border-color:rgba(13,13,13,0.05); opacity:0.5; }
+.tl-slot.set     { background:#888; border-color:#666; }
+.tl-slot.night   { background:#e8e4de; border-color:rgba(13,13,13,0.05); opacity:0.5; color:#444; }
 
 /* TIMELINE LEGENDA */
 #sh-tl-legend {
-  display:flex; gap:10px; flex-wrap:nowrap; overflow-x:auto;
+  display:flex; gap:10px; flex-wrap:wrap;
   font-family:var(--font); font-size:0.5rem; letter-spacing:0.5px;
   margin-top:4px; margin-bottom:12px; color:var(--mid);
 }
