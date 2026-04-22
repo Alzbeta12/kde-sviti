@@ -80,11 +80,12 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #sh-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(13,13,13,0.09);}
 .snb{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:5px 10px;background:transparent;border:1px solid rgba(13,13,13,0.2);cursor:pointer;}
 .snb:hover{background:var(--sun);}
+#sh-status-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
 #sh-badge{display:inline-block;font-size:0.49rem;background:var(--ink);color:var(--paper);padding:2px 6px;letter-spacing:1px;margin-bottom:3px;}
 #sh-name{font-family:var(--font);font-size:1.8rem;font-weight:900;letter-spacing:-0.5px;line-height:1.05;margin-bottom:6px;}
 #sh-addr{font-size:0.62rem;color:#666;margin-bottom:2px;}
 #sh-hours{font-size:0.62rem;color:#666;margin-bottom:12px;}
-#sh-st{display:inline-block;padding:4px 12px;border:1px solid rgba(13,13,13,0.15);font-size:0.61rem;font-weight:700;letter-spacing:1px;margin-bottom:12px;}
+#sh-st{display:inline-block;padding:4px 12px;border:1px solid rgba(13,13,13,0.15);font-size:0.61rem;font-weight:700;letter-spacing:1px;}
 #sh-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(13,13,13,0.08);border:1px solid rgba(13,13,13,0.08);margin-bottom:12px;border-radius:8px;overflow:hidden;}
 .ss{background:var(--paper);padding:8px 10px;font-size:0.57rem;line-height:1.6;}
 .ss .sl{color:#999;display:block;font-size:0.48rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;}
@@ -237,7 +238,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
       <button class="snb" onclick="backToList()">&#8592; SEZNAM</button>
       <button class="snb" onclick="closeSheet()">&#10005; ZAVŘÍT</button>
     </div>
-    <div id="sh-badge"></div>
     <div id="sh-name"></div>
     <a id="sh-nav-btn" href="#" target="_blank">&#9655; KUDY NA PIVO</a>
     <div id="sh-sun-window"></div>
@@ -250,7 +250,10 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     </div>
     <div id="sh-addr"></div>
     <div id="sh-hours"></div>
-    <div id="sh-st"></div>
+    <div id="sh-status-row">
+      <div id="sh-st"></div>
+      <div id="sh-badge"></div>
+    </div>
     <div id="sh-grid">
       <div class="ss"><span class="sl">VÝŠKA SLUNCE</span><span class="sv" id="s-alt">-</span></div>
       <div class="ss"><span class="sl">ZÁPAD SLUNCE</span><span class="sv" id="s-set">-</span></div>
