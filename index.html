@@ -47,8 +47,8 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .cnt-r{color:var(--rain);font-size:1.1rem!important;}
 
 /* LIST */
-#list{position:fixed;inset:0;z-index:900;background:var(--paper);transform:translateX(-100%);transition:transform 0.28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);}
-#list.open{transform:translateX(0);}
+#list{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:900;background:var(--paper);transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.12);max-height:80vh;}
+#list.open{transform:translateY(0);}
 #list-hdr{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(13,13,13,0.1);gap:12px;flex-shrink:0;}
 #list-hdr h2{font-family:var(--display);font-size:1.2rem;letter-spacing:2px;flex:1;min-width:0;}
 .lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;}
@@ -804,7 +804,14 @@ function closeSheet() { document.getElementById('sheet').classList.remove('open'
 function backToList() { closeSheet(); setTimeout(openList, 50); }
 
 // ── LIST ─────────────────────────────────────────────────────────────────────
-function openList()  { renderList(); document.getElementById('list').classList.add('open'); }
+function openList()  { renderList(); document.getElementById('list').classList.add('open');
+  // Swipe na seznam
+  var listEl = document.getElementById('list');
+  var lstStartY = 0;
+  listEl.addEventListener('touchstart', function(e){ lstStartY = e.touches[0].clientY; }, {passive:true});
+  listEl.addEventListener('touchend', function(e){
+    if (e.changedTouches[0].clientY - lstStartY > 80) closeList();
+  }, {passive:true}); }
 function closeList() { document.getElementById('list').classList.remove('open'); }
 function goMap()     { closeList(); closeSheet(); }
 
@@ -826,7 +833,7 @@ function renderList() {
         var statDiff = (o[a.s]||0)-(o[b.s]||0);
         if (statDiff !== 0) return statDiff;
         if (userLat != null) return getDistance(userLat,userLng,a.lat,a.lng)-getDistance(userLat,userLng,b.lat,b.lng);
-        return 0;
+        return a.name.localeCompare(b.name, 'cs');
       });
     if (!items.length) return;
     html += '<div class="cat-lbl">'+cat.l+'</div>';
