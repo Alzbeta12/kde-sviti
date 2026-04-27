@@ -953,7 +953,10 @@ function initSwipe() {
 var LANG = 'cs';
 function toggleLang() {
   LANG = LANG === 'cs' ? 'en' : 'cs';
-  document.getElementById('btn-lang').textContent = LANG === 'cs' ? 'EN' : 'CZ';
+  var btn = document.getElementById('btn-lang');
+  btn.textContent = LANG === 'cs' ? 'EN' : 'CZ';
+  btn.style.background = LANG === 'en' ? 'var(--sun)' : 'transparent';
+  btn.style.color = 'var(--ink)';
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
