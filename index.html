@@ -39,6 +39,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
 #btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:6px 8px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-lang{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 10px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
 .cnt-s{color:var(--ink);}
@@ -219,6 +220,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
     <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
+    <button id="btn-lang" onclick="toggleLang()">EN</button>
   </div>
 </div>
 
@@ -363,7 +365,13 @@ function p2(n){return String(n).padStart(2,'0');}
 function toISO(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':'+p2(d.getMinutes());}
 function hk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':00';}
 function ftm(d){return d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});}
-function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<60)return 'Polojasno';if(c<80)return 'Oblačno';return 'Zataženo';}
+function clt(c){
+  if(c==null)return'-';
+  var cs = ['Jasno','Skoro jasno','Polojasno','Oblačno','Zataženo'];
+  var en = ['Clear','Mostly clear','Partly cloudy','Cloudy','Overcast'];
+  var i = c<20?0:c<40?1:c<60?2:c<80?3:4;
+  return LANG==='en' ? en[i] : cs[i];
+}
 
 // ── GEOLOCATION ──────────────────────────────────────────────────────────────
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -396,12 +404,12 @@ function startGeo() {
 function reqGeo() {
   var btn = document.getElementById('btn-geo');
   if (!navigator.geolocation) { btn.textContent = 'GPS N/A'; return; }
-  btn.textContent = 'HLEDÁM...';
+  btn.textContent = LANG==='en' ? 'SEARCHING...' : 'HLEDÁM...';
   navigator.geolocation.getCurrentPosition(
     function(pos) {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
-      btn.textContent = 'POLOHA OK';
+      btn.textContent = LANG==='en' ? 'LOCATION OK' : 'POLOHA OK';
       btn.classList.add('on');
       // Pridat/aktualizovat pin polohy
       if (userMarker) map.removeLayer(userMarker);
@@ -486,7 +494,7 @@ function toggleShade() {
   var btn = document.getElementById('btn-shade');
   var sw  = document.getElementById('slwrap');
   if (!shOn) {
-    btn.textContent = 'NAČÍTÁM...';
+    btn.textContent = LANG==='en' ? 'LOADING...' : 'NAČÍTÁM...';
     btn.disabled = true;
     tryInitShade(function(ok) {
       btn.disabled = false;
@@ -494,7 +502,7 @@ function toggleShade() {
         shade.addTo(map);
         shOn = true;
         btn.classList.add('on');
-        btn.textContent = 'STÍNY ZAP';
+        btn.textContent = LANG==='en' ? 'SHADOWS ON' : 'STÍNY ZAP';
         sw.classList.add('on');
         var now = new Date();
         var mins = now.getHours()*60 + now.getMinutes();
@@ -945,6 +953,60 @@ function initSwipe() {
       el.style.maxHeight = '';
     }
   }, {passive:true});
+}
+
+// ── LANGUAGE ─────────────────────────────────────────────────────────────────
+var LANG = 'cs';
+
+var UI = {
+  cs: {
+    seznam: '&#9776; SEZNAM', mapa: '&#9679; MAPA', live: '&#9201; TEĎ ŽIVĚ',
+    pocasi: 'POČASÍ', vyska: 'VÝŠKA', sviti_lbl: 'SVÍTÍ',
+    zavrít: '&#10005; ZAVŘÍT', navback: '&#8592; SEZNAM',
+    kudy: '&#9655; KUDY NA PIVO',
+    stiny: '&#9681; STÍNY', poloha: '&#9678; POLOHA',
+    mapa_back: '&#8592; MAPA',
+  },
+  en: {
+    seznam: '&#9776; LIST', mapa: '&#9679; MAP', live: '&#9201; LIVE',
+    pocasi: 'WEATHER', vyska: 'ELEVATION', sviti_lbl: 'SUNNY',
+    zavrít: '&#10005; CLOSE', navback: '&#8592; LIST',
+    kudy: '&#9655; HOW TO GET THERE',
+    stiny: '&#9681; SHADOWS', poloha: '&#9678; LOCATION',
+    mapa_back: '&#8592; MAP',
+    poloha_ok: 'LOCATION OK', poloha_hledam: 'SEARCHING...', poloha_chyba: 'LOCATION',
+    stiny_zap: 'SHADOWS ON', stiny_nactitam: 'LOADING...',
+  }
+};
+
+function applyUI() {
+  var u = UI[LANG];
+  document.getElementById('btn-lst').innerHTML = u.seznam;
+  document.getElementById('btn-map').innerHTML = u.mapa;
+  document.getElementById('btn-rt').innerHTML = u.live;
+  document.getElementById('btn-shade').innerHTML = u.stiny;
+  document.getElementById('btn-geo').innerHTML = u.poloha;
+  document.getElementById('sh-nav-btn') && (document.getElementById('sh-nav-btn').innerHTML = u.kudy);
+  // SEZNAM/ZAVRIT v sh-nav
+  var snbs = document.querySelectorAll('#sh-nav .snb');
+  if (snbs[0]) snbs[0].innerHTML = u.navback;
+  if (snbs[1]) snbs[1].innerHTML = u.zavrít;
+  // MAPA button v listu
+  var lhb = document.querySelector('.lhb');
+  if (lhb) lhb.innerHTML = u.mapa_back;
+  // Header labels
+  var hcs = document.querySelectorAll('.hc .lb');
+  var hcKeys = ['pocasi','vyska','sviti_lbl'];
+  hcs.forEach(function(el,i){ if(hcKeys[i]) el.textContent = u[hcKeys[i]] || el.textContent; });
+}
+
+function toggleLang() {
+  LANG = LANG === 'cs' ? 'en' : 'cs';
+  var btn = document.getElementById('btn-lang');
+  btn.textContent = LANG === 'cs' ? 'EN' : 'CZ';
+  btn.style.background = LANG === 'en' ? 'var(--sun)' : 'transparent';
+  btn.style.color = 'var(--ink)';
+  applyUI();
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
