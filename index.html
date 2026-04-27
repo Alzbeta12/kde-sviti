@@ -39,7 +39,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
 #btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:6px 8px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
-#btn-lang{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 10px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
 .cnt-s{color:var(--ink);}
@@ -75,7 +74,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .lex{font-size:0.58rem;color:#999;margin-left:0;font-weight:400;}
 
 /* SHEET */
-#sheet{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:800;background:var(--paper);border-top:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);max-height:85vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.12);}
+#sheet{position:fixed;left:0;right:0;bottom:0;top:15vh;z-index:800;background:var(--paper);border-top:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.12);}
 #sheet::-webkit-scrollbar{width:3px;}
 #sheet::-webkit-scrollbar-thumb{background:var(--ink);}
 #sheet.open{transform:translateY(0);}
@@ -220,7 +219,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
     <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
-    <button id="btn-lang" onclick="toggleLang()">EN</button>
   </div>
 </div>
 
@@ -339,7 +337,6 @@ var PLACES = [
 ];
 
 var TL = {zahradka:"ZAHRÁDKA", lokal:"LOKÁL", pivovar:"PIVOVAR", mokrej:"MOKREJ LOKET"};
-function getTL() { return {zahradka:t("zahradka"), lokal:t("lokal"), pivovar:t("pivovar"), mokrej:t("mokrej")}; }
 var CATS = [
   {k:"zahradka", l:"ZAHRÁDKA"},
   {k:"lokal",    l:"LOKÁLY"},
@@ -674,10 +671,10 @@ function renderSunWindow(p, date) {
     var wt = getSunWindow(p, tomorrow);
     if (wt.start) {
       el.className = 'no-sun';
-      el.textContent = t('sviti_zitra')+' ' + p2(wt.start.getHours()) + ':00';
+      el.textContent = 'Svítí zítra od ' + p2(wt.start.getHours()) + ':00';
     } else {
       el.className = 'no-sun';
-      el.textContent = t('neni_slunce');
+      el.textContent = 'Dnes není předpokládáno slunce';
     }
     return;
   }
@@ -687,18 +684,18 @@ function renderSunWindow(p, date) {
   if (curSt === 'sunny' || curSt === 'partial') {
     // Prave sviti - kdy skonci
     var mins = Math.round((w.end.getTime() - now.getTime()) / 60000);
-    if (mins <= 0) { el.textContent = t('prave'); return; }
+    if (mins <= 0) { el.textContent = 'Právě svítí'; return; }
     var h = Math.floor(mins/60), m = mins%60;
-    el.textContent = t('sviti_jeste')+' ' + (h > 0 ? h + ' '+t('hod')+' ' : '') + m + ' '+t('min')+' ('+t('do')+' ' + p2(w.end.getHours()) + ':' + p2(w.end.getMinutes()) + ')';
+    el.textContent = 'Svítí ještě ' + (h > 0 ? h + ' h ' : '') + m + ' min (do ' + p2(w.end.getHours()) + ':' + p2(w.end.getMinutes()) + ')';
   } else {
     // Zatim nesviti - kdy zacne
     if (w.start) {
       var mins2 = Math.round((w.start.getTime() - now.getTime()) / 60000);
       if (mins2 > 0) {
         var h2 = Math.floor(mins2/60), m2 = mins2%60;
-        el.textContent = t('zacne')+' ' + (h2 > 0 ? h2 + ' '+t('hod')+' ' : '') + m2 + ' '+t('min')+' ('+t('v')+' ' + p2(w.start.getHours()) + ':00)';
+        el.textContent = 'Začne svítit za ' + (h2 > 0 ? h2 + ' h ' : '') + m2 + ' min (v ' + p2(w.start.getHours()) + ':00)';
       } else {
-        el.textContent = t('sviti_od')+' ' + p2(w.start.getHours()) + ':00';
+        el.textContent = 'Svítí od ' + p2(w.start.getHours()) + ':00';
       }
     }
   }
@@ -731,7 +728,7 @@ function renderTimeline(p, date) {
   var html = '';
   var days = [new Date(date), new Date(date)];
   days[1].setDate(days[1].getDate() + 1);
-  var dayNames = [t('dnes'), t('zitra')];
+  var dayNames = ['Dnes', 'Zítra'];
 
   days.forEach(function(day, di) {
     var d = new Date(day); d.setHours(0,0,0,0);
@@ -840,7 +837,7 @@ function renderList() {
     if (!items.length) return;
     html += '<div class="cat-lbl">'+cat.l+'</div>';
     items.forEach(function(p) {
-      var m=getSM()[p.s]||SM[p.s], w=getWx(cDate), ex='';
+      var m=SM[p.s], w=getWx(cDate), ex='';
       var d_km = userLat !== null ? getDistance(userLat,userLng,p.lat,p.lng) : null;
 
       var distLabel = d_km !== null ? '<span class="lex">'+fmtDist(d_km)+'</span>' : '';
@@ -948,79 +945,6 @@ function initSwipe() {
       el.style.maxHeight = '';
     }
   }, {passive:true});
-}
-
-// ── LANGUAGE ─────────────────────────────────────────────────────────────────
-var LANG = 'cs';
-
-var T = {
-  cs: {
-    seznam: '&#9776; SEZNAM', mapa: '&#9679; MAPA', live: '&#9201; TEĎ ŽIVĚ',
-    sunny: 'SVÍTÍ', partial: 'ČÁSTEČNĚ', cloudy: 'ZATAŽENO', shady: 'STÍN', rain: 'DÉŠŤ', set: 'ZÁPAD',
-    zahradka: 'ZAHRÁDKA', lokal: 'LOKÁLY', pivovar: 'PIVOVARY', mokrej: 'OUTDOOR STANDING',
-    pocasi: 'POČASÍ', vyska: 'VÝŠKA', sviti_lbl: 'SVÍTÍ',
-    vyska_slunce: 'VÝŠKA SLUNCE', zapad_slunce: 'ZÁPAD SLUNCE', oblacnost: 'OBLAČNOST', srazky: 'SRÁŽKY',
-    na_cepu: 'NA ČEPU', o_podniku: 'O PODNIKU',
-    kudy: '&#9655; KUDY NA PIVO', navback: '&#8592; SEZNAM', zavrít: '&#10005; ZAVŘÍT',
-    dnes: 'DNES', zitra: 'ZÍTRA',
-    sviti_jeste: 'Svítí ještě', zacne: 'Začne svítit za', sviti_od: 'Svítí od',
-    sviti_zitra: 'Svítí zítra od', neni_slunce: t('neni_slunce'), prave: t('prave'),
-    min: 'min', hod: 'h', do: 'do', v: 'v',
-    poloha: '&#9678; POLOHA', stiny: '&#9681; STÍNY',
-    mapa_btn: '&#8592; MAPA',
-  },
-  en: {
-    seznam: '&#9776; LIST', mapa: '&#9679; MAP', live: '&#9201; LIVE',
-    sunny: 'SUNNY', partial: 'PARTLY SUNNY', cloudy: 'CLOUDY', shady: 'SHADE', rain: 'RAIN', set: 'SUNSET',
-    zahradka: 'BEER GARDEN', lokal: 'LOKÁLY', pivovar: 'BREWERIES', mokrej: 'OUTDOOR STANDING',
-    pocasi: 'WEATHER', vyska: 'ELEVATION', sviti_lbl: 'SUNNY',
-    vyska_slunce: 'SUN ELEVATION', zapad_slunce: 'SUNSET', oblacnost: 'CLOUD COVER', srazky: 'PRECIPITATION',
-    na_cepu: 'ON TAP', o_podniku: 'ABOUT',
-    kudy: '&#9655; HOW TO GET THERE', navback: '&#8592; LIST', zavrít: '&#10005; CLOSE',
-    dnes: 'TODAY', zitra: 'TOMORROW',
-    sviti_jeste: 'Sunny for another', zacne: 'Sun in', sviti_od: 'Sunny from',
-    sviti_zitra: 'Sunny tomorrow from', neni_slunce: 'No sun expected today', prave: 'Sunny right now',
-    min: 'min', hod: 'h', do: 'until', v: 'at',
-    poloha: '&#9678; LOCATION', stiny: '&#9681; SHADOWS',
-    mapa_btn: '&#8592; MAP',
-  }
-};
-
-function t(key) { return T[LANG][key] || T.cs[key] || key; }
-
-function toggleLang() {
-  LANG = LANG === 'cs' ? 'en' : 'cs';
-  document.getElementById('btn-lang').textContent = LANG === 'cs' ? 'EN' : 'CZ';
-  applyLang();
-  updAll();
-  if (document.getElementById('list').classList.contains('open')) renderList();
-}
-
-function applyLang() {
-  var l = t;
-  // Header
-  document.getElementById('btn-lst').innerHTML = l('seznam');
-  document.getElementById('btn-map').innerHTML = l('mapa');
-  document.getElementById('btn-rt').innerHTML = l('live');
-  document.getElementById('btn-shade').innerHTML = l('stiny');
-  document.getElementById('btn-geo').innerHTML = l('poloha');
-  // Header labels
-  var lbs = document.querySelectorAll('.lb');
-  var lbKeys = ['pocasi', 'vyska', 'sviti_lbl'];
-  lbs.forEach(function(el, i) { if (lbKeys[i]) el.textContent = l(lbKeys[i]); });
-  // Legenda
-  var legItems = document.querySelectorAll('#leg span');
-  // Sheet labels
-  document.querySelector('#sh-nav .snb:first-child') && (document.querySelector('#sh-nav .snb:first-child').innerHTML = l('navback'));
-  document.querySelector('#sh-nav .snb:last-child') && (document.querySelector('#sh-nav .snb:last-child').innerHTML = l('zavrít'));
-  document.getElementById('sh-nav-btn') && (document.getElementById('sh-nav-btn').innerHTML = l('kudy'));
-  // Grid labels
-  var sls = document.querySelectorAll('.ss .sl');
-  var slKeys = ['vyska_slunce', 'zapad_slunce', 'oblacnost', 'srazky'];
-  sls.forEach(function(el, i) { if (slKeys[i]) el.textContent = l(slKeys[i]); });
-  // MAPA button v listu
-  var lhb = document.querySelector('.lhb');
-  if (lhb) lhb.innerHTML = l('mapa_btn');
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
