@@ -39,7 +39,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
 #btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:6px 8px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
-#btn-lang{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 10px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
 .cnt-s{color:var(--ink);}
@@ -220,7 +219,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
     <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
-    <button id="btn-lang" onclick="toggleLang()">EN</button>
   </div>
 </div>
 
@@ -947,58 +945,6 @@ function initSwipe() {
       el.style.maxHeight = '';
     }
   }, {passive:true});
-}
-
-// ── LANGUAGE ─────────────────────────────────────────────────────────────────
-var LANG = 'cs';
-
-var UI = {
-  cs: {
-    seznam: '&#9776; SEZNAM', mapa: '&#9679; MAPA', live: '&#9201; TEĎ ŽIVĚ',
-    pocasi: 'POČASÍ', vyska: 'VÝŠKA', sviti_lbl: 'SVÍTÍ',
-    zavrít: '&#10005; ZAVŘÍT', navback: '&#8592; SEZNAM',
-    kudy: '&#9655; KUDY NA PIVO',
-    stiny: '&#9681; STÍNY', poloha: '&#9678; POLOHA',
-    mapa_back: '&#8592; MAPA',
-  },
-  en: {
-    seznam: '&#9776; LIST', mapa: '&#9679; MAP', live: '&#9201; LIVE',
-    pocasi: 'WEATHER', vyska: 'ELEVATION', sviti_lbl: 'SUNNY',
-    zavrít: '&#10005; CLOSE', navback: '&#8592; LIST',
-    kudy: '&#9655; HOW TO GET THERE',
-    stiny: '&#9681; SHADOWS', poloha: '&#9678; LOCATION',
-    mapa_back: '&#8592; MAP',
-  }
-};
-
-function applyUI() {
-  var u = UI[LANG];
-  document.getElementById('btn-lst').innerHTML = u.seznam;
-  document.getElementById('btn-map').innerHTML = u.mapa;
-  document.getElementById('btn-rt').innerHTML = u.live;
-  document.getElementById('btn-shade').innerHTML = u.stiny;
-  document.getElementById('btn-geo').innerHTML = u.poloha;
-  document.getElementById('sh-nav-btn') && (document.getElementById('sh-nav-btn').innerHTML = u.kudy);
-  // SEZNAM/ZAVRIT v sh-nav
-  var snbs = document.querySelectorAll('#sh-nav .snb');
-  if (snbs[0]) snbs[0].innerHTML = u.navback;
-  if (snbs[1]) snbs[1].innerHTML = u.zavrít;
-  // MAPA button v listu
-  var lhb = document.querySelector('.lhb');
-  if (lhb) lhb.innerHTML = u.mapa_back;
-  // Header labels
-  var hcs = document.querySelectorAll('.hc .lb');
-  var hcKeys = ['pocasi','vyska','sviti_lbl'];
-  hcs.forEach(function(el,i){ if(hcKeys[i]) el.textContent = u[hcKeys[i]] || el.textContent; });
-}
-
-function toggleLang() {
-  LANG = LANG === 'cs' ? 'en' : 'cs';
-  var btn = document.getElementById('btn-lang');
-  btn.textContent = LANG === 'cs' ? 'EN' : 'CZ';
-  btn.style.background = LANG === 'en' ? 'var(--sun)' : 'transparent';
-  btn.style.color = 'var(--ink)';
-  applyUI();
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
