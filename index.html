@@ -39,6 +39,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
 #btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:6px 8px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-lang{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 10px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
 .cnt-s{color:var(--ink);}
@@ -219,6 +220,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
     <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
+    <button id="btn-lang" onclick="toggleLang()">EN</button>
   </div>
 </div>
 
@@ -945,6 +947,13 @@ function initSwipe() {
       el.style.maxHeight = '';
     }
   }, {passive:true});
+}
+
+// ── LANGUAGE ─────────────────────────────────────────────────────────────────
+var LANG = 'cs';
+function toggleLang() {
+  LANG = LANG === 'cs' ? 'en' : 'cs';
+  document.getElementById('btn-lang').textContent = LANG === 'cs' ? 'EN' : 'CZ';
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
