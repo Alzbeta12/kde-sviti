@@ -994,6 +994,11 @@ function applyUI() {
   // MAPA button v listu
   var lhb = document.querySelector('.lhb');
   if (lhb) lhb.innerHTML = u.mapa_back;
+  // Refresh weather value
+  if (wCache && wCache.cloud != null) {
+    var hw = document.getElementById('hw');
+    if (hw) hw.textContent = clt(wCache.cloud);
+  }
   // Header labels
   var hcs = document.querySelectorAll('.hc .lb');
   var hcKeys = ['pocasi','vyska','sviti_lbl'];
