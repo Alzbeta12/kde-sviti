@@ -213,7 +213,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
     <div class="hc"><span class="lb">Výška</span><span class="vl" id="hs">-</span></div>
     <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
-    <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataženo</span><span class="vl cnt-c" id="cnt-c">0</span></div>
+    
   </div>
   <div id="hdr-bot">
     <button id="btn-rt" onclick="goRT()">&#9201; TEĎ ŽIVĚ</button>
@@ -980,7 +980,11 @@ function applyUI() {
   var shade = document.getElementById('btn-shade');
   if (shade) shade.innerHTML = u.stiny;
   var geo = document.getElementById('btn-geo');
-  if (geo && (geo.textContent === 'POLOHA' || geo.textContent === 'LOCATION')) geo.innerHTML = u.poloha;
+  if (geo) {
+    var geoText = geo.textContent.trim();
+    if (geoText === 'POLOHA' || geoText === 'LOCATION') geo.innerHTML = u.poloha;
+    else if (geoText === 'POLOHA OK' || geoText === 'LOCATION OK') geo.textContent = LANG==='en' ? 'LOCATION OK' : 'POLOHA OK';
+  }
   var navBtn = document.getElementById('sh-nav-btn');
   if (navBtn) navBtn.innerHTML = u.kudy;
   var snbs = document.querySelectorAll('#sh-nav .snb');
