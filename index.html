@@ -26,18 +26,18 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #hdr{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--paper);border-bottom:1px solid rgba(13,13,13,0.1);font-family:var(--font);}
 #hdr-top{display:flex;align-items:stretch;border-bottom:1px solid rgba(13,13,13,0.15);overflow-x:auto;scrollbar-width:none;}
 #hdr-top::-webkit-scrollbar{display:none;}
-.hc{padding:5px 7px;border-right:1px solid rgba(13,13,13,0.15);display:flex;flex-direction:column;justify-content:center;font-size:0.52rem;line-height:1.6;flex-shrink:0;min-width:0;}
+.hc{padding:6px 11px;border-right:1px solid rgba(13,13,13,0.15);display:flex;flex-direction:column;justify-content:center;font-size:0.57rem;line-height:1.7;flex-shrink:0;}
 .hc .lb{font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;color:#999;display:block;margin-bottom:2px;}
 .hc .vl{font-weight:700;display:block;line-height:1.2;}
-#logo{padding:6px 10px;border-right:1px solid rgba(13,13,13,0.1);display:flex;align-items:center;gap:7px;flex-shrink:0;}
-#logo span{font-family:var(--display);font-size:1.2rem;letter-spacing:0.5px;line-height:1;}
+#logo{padding:7px 13px;border-right:1px solid rgba(13,13,13,0.1);display:flex;align-items:center;gap:9px;flex-shrink:0;}
+#logo span{font-family:var(--display);font-size:1.65rem;letter-spacing:2px;line-height:1;}
 #sdot{width:21px;height:21px;border-radius:50%;border:var(--rule);background:var(--sun);flex-shrink:0;transition:background 0.5s;}
 #sdot.pulse{animation:pulse 2.2s ease-in-out infinite;}
 #hdr-bot{display:flex;align-items:center;}
 #btn-rt{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 11px;background:var(--paper);color:var(--ink);border:none;border-right:var(--rule);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-rt.off{background:transparent;color:var(--ink);}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
-#btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:6px 8px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+#btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-lang{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 10px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
@@ -48,11 +48,11 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .cnt-r{color:var(--rain);font-size:1.1rem!important;}
 
 /* LIST */
-#list{position:fixed;left:0;right:0;bottom:0;top:15vh;z-index:900;background:var(--paper);transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.12);overflow:hidden;}
-#list.open{transform:translateY(0);}
-#list-hdr{display:flex;align-items:center;justify-content:flex-end;padding:10px 14px;border-bottom:1px solid rgba(13,13,13,0.1);gap:12px;flex-shrink:0;}
+#list{position:fixed;inset:0;z-index:900;background:var(--paper);transform:translateX(-100%);transition:transform 0.28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);}
+#list.open{transform:translateX(0);}
+#list-hdr{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(13,13,13,0.1);gap:12px;flex-shrink:0;}
 #list-hdr h2{font-family:var(--display);font-size:1.2rem;letter-spacing:2px;flex:1;min-width:0;}
-.lhb{font-family:var(--font);font-size:0.62rem;font-weight:600;padding:6px 12px;background:transparent;color:var(--ink);border:1px solid rgba(13,13,13,0.2);cursor:pointer;white-space:nowrap;border-radius:8px;}
+.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;}
 .lhb:hover{background:var(--sun);}
 #list-fil{display:flex;border-bottom:1px solid rgba(13,13,13,0.1);overflow-x:auto;scrollbar-width:none;flex-shrink:0;-webkit-overflow-scrolling:touch;min-height:40px;}
 #list-fil::-webkit-scrollbar{display:none;}
@@ -72,16 +72,16 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .ladr{font-size:0.58rem;color:#999;margin-bottom:2px;font-weight:400;}
 .lout{font-size:0.58rem;color:#888;margin-bottom:6px;font-weight:400;}
 .lst{font-size:0.62rem;font-weight:700;letter-spacing:0.5px;margin-top:8px;display:block;}
-.lex{font-size:0.58rem;color:#999;margin-left:0;font-weight:400;}
+.lex{font-size:0.62rem;color:#666;margin-left:8px;font-weight:400;}
 
 /* SHEET */
-#sheet{position:fixed;left:0;right:0;bottom:0;top:15vh;z-index:800;background:var(--paper);border-top:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.12);}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:800;background:var(--paper);border-top:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);max-height:80vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.12);}
 #sheet::-webkit-scrollbar{width:3px;}
 #sheet::-webkit-scrollbar-thumb{background:var(--ink);}
 #sheet.open{transform:translateY(0);}
 #sh-handle{width:36px;height:4px;background:rgba(13,13,13,0.17);border-radius:2px;margin:10px auto 0;}
-#sh-in{padding:0 16px 40px;}
-#sh-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:12px 16px 10px;border-bottom:1px solid rgba(13,13,13,0.09);position:sticky;top:0;background:var(--paper);z-index:2;}
+#sh-in{padding:12px 16px 28px;}
+#sh-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:16px 0 10px;border-bottom:1px solid rgba(13,13,13,0.09);}
 .snb{font-family:var(--font);font-size:0.62rem;font-weight:600;letter-spacing:0.5px;padding:6px 12px;background:transparent;border:1px solid rgba(13,13,13,0.2);cursor:pointer;color:var(--ink);text-decoration:none;-webkit-appearance:none;border-radius:8px;}
 .snb:hover{background:var(--sun);color:var(--ink);}
 #sh-status-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
@@ -181,7 +181,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #slwrap.on{display:block;}
 #sl-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 #sl-lbl{font-family:var(--display);font-size:1.3rem;letter-spacing:2px;}
-#btn-play{font-family:var(--font);font-size:0.57rem;font-weight:700;letter-spacing:1px;padding:4px 10px;background:transparent;border:1px solid rgba(13,13,13,0.2);cursor:pointer;border-radius:8px;}
+#btn-play{font-family:var(--font);font-size:0.57rem;font-weight:700;letter-spacing:1px;padding:4px 10px;background:transparent;border:var(--rule);cursor:pointer;}
 #btn-play:hover{background:var(--sun);}
 #btn-play.on{background:var(--ink);color:var(--sun);}
 #slr{width:100%;-webkit-appearance:none;height:3px;background:var(--ink);outline:none;cursor:pointer;margin-bottom:4px;}
@@ -212,7 +212,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVÍTÍ</span></div>
     <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
     <div class="hc"><span class="lb">Výška</span><span class="vl" id="hs">-</span></div>
-    
+    <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
     <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataženo</span><span class="vl cnt-c" id="cnt-c">0</span></div>
   </div>
   <div id="hdr-bot">
@@ -225,8 +225,8 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 </div>
 
 <div id="list">
-  <div style="width:36px;height:4px;background:rgba(13,13,13,0.15);border-radius:2px;margin:10px auto 0;flex-shrink:0;"></div>
   <div id="list-hdr">
+    <h2>KDE SVÍTÍ</h2>
     <button class="lhb" onclick="goMap()">&#8592; MAPA</button>
   </div>
     <div id="list-sc"></div>
@@ -281,9 +281,9 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 </div>
 
 <div id="leg">
-  <div class="lr"><div class="ld" style="background:#F7C325"></div>SVÍTÍ</div>
-  <div class="lr"><div class="ld" style="background:#D4A017"></div>ČÁSTEČNĚ</div>
-  <div class="lr"><div class="ld" style="background:#ccc"></div>ZATAŽENO</div>
+  <div class="lr"><div class="ld" style="background:#F7C325"></div><span id="leg-sunny">SVÍTÍ</span></div>
+  <div class="lr"><div class="ld" style="background:#D4A017"></div><span id="leg-partial">ČÁSTEČNĚ</span></div>
+  <div class="lr"><div class="ld" style="background:#ccc"></div><span id="leg-cloudy">ZATAŽENO</span></div>
   <div class="lr"><div class="ld" style="background:#888"></div><span id="leg-shady">STÍN</span></div>
 </div>
 
@@ -306,37 +306,37 @@ var SC=(function(){var PI=Math.PI,sin=Math.sin,cos=Math.cos,tan=Math.tan,asin=Ma
 // ── DATA (GPS verified via Google Places) ────────────────────────────────────
 var PLACES = [
   // LOKAL
-  {id:1,  name:"Lokál Nad Stromovkou", addr:"Nad Královskou oborou 232/31, Praha 7",  hours:"11:30-23:30",               beer:"Plzeň (tank), Kozel Černý nefiltr, pivní speciál, Birell nealkoholický",            out:"zahrádka před podnikem, kousek od parku",          lat:50.1030,   lng:14.4184,   f:315,a:130, type:"lokal",   note:"Pár metrů od Stromovky se u hladinky potkávají štamgasti i náhodní pejskaři. Ambiente, venkovní zahrádka."},
-  {id:2,  name:"Lokál U Bílé kuželky", addr:"Míšeňská 12, Malá Strana",           hours:"11:00-24:00",               beer:"Plzeň (tank), Kozel Černý",            out:"pavlačová zahrádka, Malá Strana",              lat:50.0877,   lng:14.4076,   f:225,a:120,  type:"lokal",   note:"Malostranský Lokál Ambiente v prostorách s hospodskou tradicí od roku 1862 — kousek od Karlova mostu, skvělé pivo a domácí česká kuchyně. Venkovní zahrádka."},
-  {id:3,  name:"Lokál Hamburk",        addr:"Sokolovská 55, Karlín",              hours:"11:00-23:00",               beer:"Plzeň (tank), Kozel Černý",            out:"zahrádka na nároží, Karlín",             lat:50.0931,   lng:14.4467,   f:180,a:120, type:"lokal",   note:"Oblíbené nároží v Karlíně ze skupiny Ambiente, přímo za rohem od pivovaru Dva kohouti — tradiční česká kuchyně a pečlivě ošetřená plzeň."},
-  {id:4,  name:"U Kalendů",            addr:"Rašínovo nábřeží 58, Praha 2",       hours:"11:30-23:30",               beer:"Plzeň (tank)",            out:"náplavka, Rašínovo nábřeží",                        lat:50.0713,   lng:14.4146,   f:270,a:140, type:"zahradka",   note:"Hospoda a pekárna od Ambiente na Rašínově nábřeží — vaří bez pozlátka, pečou kváskový chléb a čepují pečlivě ošetřenou plzeň, oceněna Michelin Bib Gourmand (2025). Venkovní zahrádka."},
+  {id:1,  name:"Lokál Nad Stromovkou", addr:"Nad Královskou oborou 232/31, Praha 7",  hours:"11:30-23:30",               beer:"Plzeň (tank), Kozel Černý nefiltr, pivní speciál, Birell nealkoholický",            out:"zahrádka před podnikem, kousek od parku",          lat:50.1030,   lng:14.4184,   f:180,a:150, type:"lokal",   note:"Pár metrů od Stromovky se u hladinky potkávají štamgasti i náhodní pejskaři. Ambiente, venkovní zahrádka."},
+  {id:2,  name:"Lokál U Bílé kuželky", addr:"Míšeňská 12, Malá Strana",           hours:"11:00-24:00",               beer:"Plzeň (tank), Kozel Černý",            out:"pavlačová zahrádka, Malá Strana",              lat:50.0877,   lng:14.4075,   f:160,a:90,  type:"lokal",   note:"Malostranský Lokál Ambiente v prostorách s hospodskou tradicí od roku 1862 — kousek od Karlova mostu, skvělé pivo a domácí česká kuchyně. Venkovní zahrádka."},
+  {id:3,  name:"Lokál Hamburk",        addr:"Sokolovská 55, Karlín",              hours:"11:00-23:00",               beer:"Plzeň (tank), Kozel Černý",            out:"zahrádka na nároží, Karlín",             lat:50.0931,   lng:14.4467,   f:200,a:110, type:"lokal",   note:"Oblíbené nároží v Karlíně ze skupiny Ambiente, přímo za rohem od pivovaru Dva kohouti — tradiční česká kuchyně a pečlivě ošetřená plzeň."},
+  {id:4,  name:"U Kalendů",            addr:"Rašínovo nábřeží 58, Praha 2",       hours:"11:30-23:30",               beer:"Plzeň (tank)",            out:"náplavka, Rašínovo nábřeží",                        lat:50.0713,   lng:14.4146,   f:270,a:150, type:"zahradka",   note:"Hospoda a pekárna od Ambiente na Rašínově nábřeží — vaří bez pozlátka, pečou kváskový chléb a čepují pečlivě ošetřenou plzeň, oceněna Michelin Bib Gourmand (2025). Venkovní zahrádka."},
   // PIVOVAR
-  {id:5,  name:"Dva Kohouti",          addr:"Sokolovská 55/81, Karlín",              hours:"Po-Pa 15-01 / So-Ne 12-",   beer:"Místní ležák 12° (vlastní), Matuška desítka, California APA, IPA a speciály",             out:"industriální dvůr, Karlín",   lat:50.0935,   lng:14.4469,   f:270,a:240, type:"pivovar", note:"Pivovar s výčepem pod jednou střechou ze skupiny Ambiente — industriální dvůr v Karlíně. Venkovní zahrádka."},
-  {id:6,  name:"Automat Matuška",      addr:"Dejvická 4, Praha 6",                hours:"Ut-So 11:30-24 / Po,Ne 12-22", beer:"10 kohoutů Matuška",       out:"parapety a stání před podnikem",         lat:50.0980,   lng:14.4043,   f:180,a:120, type:"pivovar", note:"Dejvické BBQ pro masožrouty i vegetariány a nanopivovar, ve kterém vaří pivní pokusy. Venkovní zahrádka."},
-  {id:7,  name:"U Fleků",              addr:"Křemencova 11, Nové Město",           hours:"denně 10:00-23:00",          beer:"Flekovský tmavý ležák 13°", out:"zahrada v historickém pivovarním areálu",        lat:50.0789,   lng:14.4166,   f:90,a:100, type:"pivovar", note:"Nejstarší pražský pivovar fungující nepřetržitě od roku 1499 — vaří se tu jediný tmavý ležák v osmi historických sálech s kabaretními vystoupeními. Venkovní zahrádka."},
-  {id:8,  name:"Skô",                  addr:"Bubenské nábřeží 306/13, Holešovická tržnice",    hours:"Po 17-23 / Ut-Pa 11:30-14:30 a 17-23 / So 11:30-23 / Ne 11:30-17", beer:"Plzeň", out:"sdílený dvůr Holešovické tržnice",   lat:50.1003,   lng:14.4458,   f:270,a:140, type:"zahradka", note:"Slovenská restaurace od Ambiente v historických halách Holešovické tržnice — sousedí s cukrárnou Myšák a řeznictvím Naše maso, sdílený dvůr ve stylu AP Ateliéru Josefa Pleskota."},
+  {id:5,  name:"Dva Kohouti",          addr:"Sokolovská 55/81, Karlín",              hours:"Po-Pa 15-01 / So-Ne 12-",   beer:"Místní ležák 12° (vlastní), Matuška desítka, California APA, IPA a speciály",             out:"industriální dvůr, Karlín",   lat:50.0935,   lng:14.4468,   f:180,a:120, type:"pivovar", note:"Pivovar s výčepem pod jednou střechou ze skupiny Ambiente — industriální dvůr v Karlíně. Venkovní zahrádka."},
+  {id:6,  name:"Automat Matuška",      addr:"Dejvická 4, Praha 6",                hours:"Ut-So 11:30-24 / Po,Ne 12-22", beer:"10 kohoutů Matuška",       out:"parapety a stání před podnikem",         lat:50.0980,   lng:14.4043,   f:200,a:120, type:"pivovar", note:"Dejvické BBQ pro masožrouty i vegetariány a nanopivovar, ve kterém vaří pivní pokusy. Venkovní zahrádka."},
+  {id:7,  name:"U Fleků",              addr:"Křemencova 11, Nové Město",           hours:"denně 10:00-23:00",          beer:"Flekovský tmavý ležák 13°", out:"zahrada v historickém pivovarním areálu",        lat:50.0789,   lng:14.4166,   f:180,a:100, type:"pivovar", note:"Nejstarší pražský pivovar fungující nepřetržitě od roku 1499 — vaří se tu jediný tmavý ležák v osmi historických sálech s kabaretními vystoupeními. Venkovní zahrádka."},
+  {id:8,  name:"Skô",                  addr:"Bubenské nábřeží 306/13, Holešovická tržnice",    hours:"Po 17-23 / Ut-Pa 11:30-14:30 a 17-23 / So 11:30-23 / Ne 11:30-17", beer:"Plzeň", out:"sdílený dvůr Holešovické tržnice",   lat:50.1003,   lng:14.4458,   f:180,a:160, type:"zahradka", note:"Slovenská restaurace od Ambiente v historických halách Holešovické tržnice — sousedí s cukrárnou Myšák a řeznictvím Naše maso, sdílený dvůr ve stylu AP Ateliéru Josefa Pleskota."},
   // HISTORICKE
-  {id:9,  name:"U Pinkasů",           addr:"Jungmannovo nám. 16, Nové Město",    hours:"10:00-22:30",               beer:"Plzeň (tank)",     out:"gotická zahrádka u Chrámu P. M. Sněžné",   lat:50.0832,   lng:14.4233,   f:0,a:100, type:"zahradka",    note:"Legendární pivnice, kde se v roce 1843 v Praze poprvé čepovala plzeň — tři podlaží, gotická zahrádka u Chrámu Panny Marie Sněžné. Venkovní zahrádka."},
-  {id:10, name:"Malostranská beseda",  addr:"Malostranské nám. 21, Malá Strana", hours:"denně 11:00-23:00",          beer:"Plzeň (tank), Kozel Černý",             out:"předzahrádka v podloubí, Malostranské náměstí", lat:50.0883,   lng:14.4048,   f:270,a:90, type:"zahradka",    note:"Součást konceptu Pilsner Urquell Original Restaurant v historické budově na Malostranském náměstí s pivnicí, restaurací a kavárnou pod jednou střechou. Venkovní zahrádka."},
-  {id:11, name:"Mincovna",             addr:"Staroměstské nám. 7, Praha 1",       hours:"denně 11:30-23:00",          beer:"Plzeň, Kozel Černý, Birell, Volba sládků, Řezané",             out:"zahrádka na Staroměstském náměstí",           lat:50.0883,   lng:14.4213,   f:225,a:180, type:"zahradka",    note:"Restaurace přímo na Staroměstském náměstí, tradiční česká kuchyně v moderní prezentaci. Venkovní zahrádka."},
-  {id:12, name:"U Zlatého slona",      addr:"Havelská 9, Staré Město",            hours:"denně 11:00-23:00",          beer:"Plzeň (tank)",             out:"zahrádka v podloubí Havelské ulice",   lat:50.0848,   lng:14.4208,   f:180,a:100,  type:"zahradka",    note:"Pivnice u Havelského trhu, tradiční česká kuchyně a zahrádka v podloubí Havelské ulice. Venkovní zahrádka."},
-  {id:13, name:"U Dvou koček",         addr:"Uhelný trh 10, Staré Město",         hours:"denně 11:00-23:00",          beer:"Kočka světlá 12°, Kočka polotmavá, Kočka tmavá (vlastní minipivovar), Plzeň",             out:"zahrádka na Uhelném trhu",              lat:50.0836,   lng:14.4205,   f:0,a:100,  type:"zahradka",    note:"Nejstarší pražská hospoda s minipivovarem, slavná z natáčení Vrchní, prchni! s Josefem Abrhámem — každý večer naživo harmonikář. Venkovní zahrádka."},
-    {id:15, name:"U Rarášků",            addr:"Mikulandská 7, Nové Město",          hours:"denně 15:00-02:00",          beer:"Plzeň (tank), Kozel, Žíkovský rarášek",       out:"zahrádka ve vnitrobloku, Nové Město",   lat:50.08153,  lng:14.41784,  f:90,a:100,  type:"zahradka",    note:"Výčep v legendárních prostorách vinárny U Rarášků, kde se za komunismu scházeli herci a disidenti — zahrádka ve vnitrobloku."},
-  {id:16, name:"U Buldoka",            addr:"Mikulandská 7, Nové Město",          hours:"Ut-So 15-02 / Ne 15-00",     beer:"Plzeň",            out:"sdílená zahrádka s U Rarášků",      lat:50.08151,  lng:14.41772,  f:90,a:100,  type:"zahradka",    note:"Tradiční hospoda kousek od Národní třídy."},
+  {id:9,  name:"U Pinkasů",           addr:"Jungmannovo nám. 16, Nové Město",    hours:"10:00-22:30",               beer:"Plzeň (tank)",     out:"gotická zahrádka u Chrámu P. M. Sněžné",   lat:50.0832,   lng:14.4233,   f:170,a:100, type:"zahradka",    note:"Legendární pivnice, kde se v roce 1843 v Praze poprvé čepovala plzeň — tři podlaží, gotická zahrádka u Chrámu Panny Marie Sněžné. Venkovní zahrádka."},
+  {id:10, name:"Malostranská beseda",  addr:"Malostranské nám. 21, Malá Strana", hours:"denně 11:00-23:00",          beer:"Plzeň (tank), Kozel Černý",             out:"předzahrádka v podloubí, Malostranské náměstí", lat:50.0883,   lng:14.4048,   f:160,a:100, type:"zahradka",    note:"Součást konceptu Pilsner Urquell Original Restaurant v historické budově na Malostranském náměstí s pivnicí, restaurací a kavárnou pod jednou střechou. Venkovní zahrádka."},
+  {id:11, name:"Mincovna",             addr:"Staroměstské nám. 7, Praha 1",       hours:"denně 11:30-23:00",          beer:"Plzeň, Kozel Černý, Birell, Volba sládků, Řezané",             out:"zahrádka na Staroměstském náměstí",           lat:50.0883,   lng:14.4213,   f:200,a:180, type:"zahradka",    note:"Restaurace přímo na Staroměstském náměstí, tradiční česká kuchyně v moderní prezentaci. Venkovní zahrádka."},
+  {id:12, name:"U Zlatého slona",      addr:"Havelská 9, Staré Město",            hours:"denně 11:00-23:00",          beer:"Plzeň (tank)",             out:"zahrádka v podloubí Havelské ulice",   lat:50.0849,   lng:14.4208,   f:180,a:90,  type:"zahradka",    note:"Pivnice u Havelského trhu, tradiční česká kuchyně a zahrádka v podloubí Havelské ulice. Venkovní zahrádka."},
+  {id:13, name:"U Dvou koček",         addr:"Uhelný trh 10, Staré Město",         hours:"denně 11:00-23:00",          beer:"Kočka světlá 12°, Kočka polotmavá, Kočka tmavá (vlastní minipivovar), Plzeň",             out:"zahrádka na Uhelném trhu",              lat:50.0836,   lng:14.4205,   f:200,a:90,  type:"zahradka",    note:"Nejstarší pražská hospoda s minipivovarem, slavná z natáčení Vrchní, prchni! s Josefem Abrhámem — každý večer naživo harmonikář. Venkovní zahrádka."},
+  {id:14, name:"U Kocoura",            addr:"Nerudova 2, Malá Strana",            hours:"denně 12:00-22:30",          beer:"Plzeň",             out:"schody a chodník, Nerudova ulice",    lat:50.0887,   lng:14.4020,   f:210,a:100, type:"mokrej",    note:"Tradiční malostranská hospoda v Nerudově ulici pod Pražským hradem — starobylý interiér, domácká atmosféra a pivo jak se patří."},
+  {id:15, name:"U Rarášků",            addr:"Mikulandská 7, Nové Město",          hours:"denně 15:00-02:00",          beer:"Plzeň (tank), Kozel, Žíkovský rarášek",       out:"zahrádka ve vnitrobloku, Nové Město",   lat:50.08153,  lng:14.41784,  f:180,a:80,  type:"zahradka",    note:"Výčep v legendárních prostorách vinárny U Rarášků, kde se za komunismu scházeli herci a disidenti — zahrádka ve vnitrobloku."},
+  {id:16, name:"U Buldoka",            addr:"Mikulandská 7, Nové Město",          hours:"Ut-So 15-02 / Ne 15-00",     beer:"Plzeň",            out:"sdílená zahrádka s U Rarášků",      lat:50.08151,  lng:14.41772,  f:180,a:80,  type:"zahradka",    note:"Tradiční hospoda kousek od Národní třídy."},
   // DALSI
-  {id:18, name:"PULT",                 addr:"V Celnici 4, Nové Město",            hours:"denně 15:00-01:00",          beer:"6 ležáků (Plzeň, Budvar + 4 rotující) + speciály",         out:"venkovní stání u výčepu, V Celnici",                  lat:50.0882,   lng:14.4305,   f:250,a:100, type:"mokrej",   note:"Průkopnický pivní bar od Ambiente se šesti pečlivě vybranými českými ležáky a pivními speciály — moderní prostor v Celnici u náměstí Republiky."},
-  {id:20, name:"U Černého vola",       addr:"Loretánské nám. 1, Hradčany",        hours:"10:00-22:00",               beer:"Kozel Černý, Kozel světlý 12°, Plzeň",                out:"zahrádka na Loretánském náměstí",             lat:50.0882,   lng:14.3918,   f:0,a:180, type:"mokrej",   note:"Ikonická pivnice na Loretánském náměstí otevřená v roce 1965 — za komunismu útočiště disidentů, čas tu nikam nespěchá."},
-  {id:21, name:"Hostinec Na Výtoni",   addr:"Rašínovo nábřeží 412, Praha 2",      hours:"denně 11:30-23:00",          beer:"Plzeň",          out:"zahrádka u Náplavky",             lat:50.0679,   lng:14.4154,   f:270,a:120, type:"zahradka",   note:"Hostinec v historické budově Podskalské celnice přímo na náplavce — legenda za zlatě upečenou kachnu z unikátního grilu Josper, oceněn Gault Millau. Venkovní zahrádka."},
-  {id:23, name:"Na Urale",            addr:"Puškinovo nám. 15, Bubeneč, Praha 6",   hours:"denne 11:00-23:00",          beer:"Plzeň (tank), Kozel Černý, Řezané, Radler",     out:"zahrada na Puškinově náměstí",             lat:50.1026,   lng:14.4022,   f:225,a:130, type:"zahradka", note:"Česká klasika v Bubenči s tankovou plzní a oceněním Hvězda sládků. Venkovní zahrádka."},
+  {id:18, name:"PULT",                 addr:"V Celnici 4, Nové Město",            hours:"denně 15:00-01:00",          beer:"6 ležáků (Plzeň, Budvar + 4 rotující) + speciály",         out:"venkovní stání u výčepu, V Celnici",                  lat:50.0882,   lng:14.4305,   f:160,a:100, type:"mokrej",   note:"Průkopnický pivní bar od Ambiente se šesti pečlivě vybranými českými ležáky a pivními speciály — moderní prostor v Celnici u náměstí Republiky."},
+  {id:20, name:"U Černého vola",       addr:"Loretánské nám. 1, Hradčany",        hours:"10:00-22:00",               beer:"Kozel Černý, Kozel světlý 12°, Plzeň",                out:"zahrádka na Loretánském náměstí",             lat:50.0920,   lng:14.3917,   f:180,a:180, type:"mokrej",   note:"Ikonická pivnice na Loretánském náměstí otevřená v roce 1965 — za komunismu útočiště disidentů, čas tu nikam nespěchá."},
+  {id:21, name:"Hostinec Na Výtoni",   addr:"Rašínovo nábřeží 412, Praha 2",      hours:"denně 11:30-23:00",          beer:"Plzeň",          out:"zahrádka u Náplavky",             lat:50.0679,   lng:14.4154,   f:260,a:130, type:"zahradka",   note:"Hostinec v historické budově Podskalské celnice přímo na náplavce — legenda za zlatě upečenou kachnu z unikátního grilu Josper, oceněn Gault Millau. Venkovní zahrádka."},
+  {id:23, name:"Na Urale",            addr:"Puškinovo nám. 15, Bubeneč, Praha 6",   hours:"denne 11:00-23:00",          beer:"Plzeň (tank), Kozel Černý, Řezané, Radler",     out:"zahrada na Puškinově náměstí",             lat:50.1026,   lng:14.4022,   f:180,a:140, type:"zahradka", note:"Česká klasika v Bubenči s tankovou plzní a oceněním Hvězda sládků. Venkovní zahrádka."},
   {id:24, name:"Automat Matuška JZP",  addr:"nám. J. z Poděbrad 16, Vinohrady", hours:"Po-Pa 11:30-24:00 / So-Ne 12:00-22:00", beer:"8 druhů piv Matuška, Bylinný střízlivec (nealko), čepovaná kombucha",          out:"terasa na náměstí J. z Poděbrad",               lat:50.0781, lng:14.4522, f:180,a:180, type:"pivovar",  note:"Druhý podnik pivovarského konceptu Matuška na náměstí Jiřího z Poděbrad — česká kuchyně s moderním twistem. Venkovní zahrádka."},
-  {id:25, name:"U Tellerů",             addr:"Vinohradská 78, Vinohrady",           hours:"Po-Pa 11:30-23:00 / So-Ne 12:00-23:00", beer:"Plzeň (tank)",              out:"zahrádka, Vinohrady",                        lat:50.0772, lng:14.4522, f:90,a:60, type:"zahradka", note:"Vyhledávaná vinohradská restaurace s vynikající českou kuchyní a zahrádkou. Hodnocení 4.8. Venkovní zahrádka."},
+  {id:25, name:"U Tellerů",             addr:"Vinohradská 78, Vinohrady",           hours:"Po-Pa 11:30-23:00 / So-Ne 12:00-23:00", beer:"Plzeň (tank)",              out:"zahrádka, Vinohrady",                        lat:50.0772, lng:14.4522, f:180,a:140, type:"zahradka", note:"Vyhledávaná vinohradská restaurace s vynikající českou kuchyní a zahrádkou. Hodnocení 4.8. Venkovní zahrádka."},
   {id:26, name:"Tankovna Karlín",       addr:"Sokolovská 100, Karlín",              hours:"denně 11:00-24:00",                     beer:"Plzeň (tank)",              out:"zahrádka, Sokolovská",                        lat:50.0941, lng:14.4523, f:180,a:140, type:"zahradka", note:"Tanková plzeň přímo v srdci Karlína. Venkovní zahrádka."},
-  {id:27, name:"Tiskárna Národní",      addr:"Národní 39, Staré Město",             hours:"Po-Pa 11:30-23:00 / So-Ne 12:00-23:00", beer:"Plzeň (tank)",              out:"zahrádka na Národní třídě",                        lat:50.0829, lng:14.4211, f:180,a:120, type:"zahradka", note:"Moderní česká kuchyně v historické budově na Národní třídě — oblíbená restaurace s vynikajícími pečenými masy. Venkovní zahrádka."},
+  {id:27, name:"Tiskárna Národní",      addr:"Národní 39, Staré Město",             hours:"Po-Pa 11:30-23:00 / So-Ne 12:00-23:00", beer:"Plzeň (tank)",              out:"zahrádka na Národní třídě",                        lat:50.0829, lng:14.4211, f:200,a:120, type:"zahradka", note:"Moderní česká kuchyně v historické budově na Národní třídě — oblíbená restaurace s vynikajícími pečenými masy. Venkovní zahrádka."},
   {id:28, name:"Lokál U Zavadilů",    addr:"K Vernáku 1, Kunratice, Praha 4",        hours:"Po-Ut 11:00-22:00 / St-Pa 11:00-23:00 / So-Ne 11:00-23:00", beer:"Plzeň (tank), Kozel Černý", out:"prostorná zahrada v Kunraticích",               lat:50.0142, lng:14.4856, f:180,a:160, type:"lokal",    note:"Jediný Lokál Ambiente mimo centrum — prostorná zahrádka, rodinná atmosféra a pivo jak se patří."},
   {id:29, name:"U Matěje",             addr:"U Matěje 1, Dejvice, Praha 6",          hours:"Po-Ne 11:30-23:00",             beer:"Plzeň (tank)",                  out:"zahrada v Dejvicích",              lat:50.1132, lng:14.3798, f:180,a:160, type:"zahradka", note:"Vlastní restaurace šéfkuchaře Jana Punčocháře se zaměřuje na moderní i tradiční českou kuchyni s důrazem na poctivé omáčky a špičkové maso. Bib Gourmand 2026. Venkovní zahrádka."},
-  {id:30, name:"Pivnice U Sadu",        addr:"Škroupovo nám. 5, Žižkov, Praha 3",      hours:"Po 8:00-2:00 / Ut-So 8:00-4:00 / Ne 8:00-2:00", beer:"Plzeň + rotující speciály",     out:"zahrádka pod Žižkovskou věží",    lat:50.0805, lng:14.4492, f:270,a:160, type:"zahradka", note:"Kultovní žižkovská pivnice, kde čepují pivo až do rána. Venkovní zahrádka."},
-  {id:31, name:"Střídačka",           addr:"Týnská ulička 2, Staré Město",          hours:"Po-So 11:00-24:00 / Ne 11:00-22:00",   beer:"Plzeň (tank)",              out:"zahrádka u Týnského chrámu",              lat:50.0881,   lng:14.4227,   f:160,a:80,  type:"zahradka", note:"Česká klasika kousek od Staroměstského náměstí — pečlivě ošetřená plzeň, BBQ, žebra a dost mňamky. Zahrádka v úzké uličce u Týnského chrámu. Hodnocení 4.5."},
-  {id:22, name:"U Veverky",            addr:"Eliášova 324, Bubeneč, Praha 6",               hours:"denně 11:00-23:30",          beer:"Plzeň (tank), Birell",             out:"zahrada v Bubenči",                        lat:50.0990,   lng:14.4022,   f:270,a:120, type:"zahradka",   note:"Staropražská pivnice v Bubenči s tankovou plzní. Venkovní zahrádka."},
+  {id:30, name:"Pivnice U Sadu",        addr:"Škroupovo nám. 5, Žižkov, Praha 3",      hours:"Po 8:00-2:00 / Ut-So 8:00-4:00 / Ne 8:00-2:00", beer:"Plzeň + rotující speciály",     out:"zahrádka pod Žižkovskou věží",    lat:50.0805, lng:14.4492, f:180,a:160, type:"zahradka", note:"Kultovní žižkovská pivnice, kde čepují pivo až do rána. Venkovní zahrádka."},
+  {id:22, name:"U Veverky",            addr:"Eliášova 324, Bubeneč, Praha 6",               hours:"denně 11:00-23:30",          beer:"Plzeň (tank), Birell",             out:"zahrada v Bubenči",                        lat:50.0990,   lng:14.4022,   f:200,a:130, type:"zahradka",   note:"Staropražská pivnice v Bubenči s tankovou plzní. Venkovní zahrádka."},
 ];
 
 var TL = {zahradka:"ZAHRÁDKA", lokal:"LOKÁL", pivovar:"PIVOVAR", mokrej:"MOKREJ LOKET"};
@@ -368,10 +368,10 @@ function hk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())
 function ftm(d){return d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});}
 function clt(c){
   if(c==null)return'-';
-  var cs = ['Jasno','Skoro jasno','Polojasno','Oblačno','Zataženo'];
-  var en = ['Clear','Mostly clear','Partly cloudy','Cloudy','Overcast'];
-  var i = c<20?0:c<40?1:c<60?2:c<80?3:4;
-  return LANG==='en' ? en[i] : cs[i];
+  var cs=['Jasno','Skoro jasno','Polojasno','Oblačno','Zataženo'];
+  var en=['Clear','Mostly clear','Partly cloudy','Cloudy','Overcast'];
+  var i=c<20?0:c<40?1:c<60?2:c<80?3:4;
+  return LANG==='en'?en[i]:cs[i];
 }
 
 // ── GEOLOCATION ──────────────────────────────────────────────────────────────
@@ -405,12 +405,12 @@ function startGeo() {
 function reqGeo() {
   var btn = document.getElementById('btn-geo');
   if (!navigator.geolocation) { btn.textContent = 'GPS N/A'; return; }
-  btn.textContent = LANG==='en' ? 'SEARCHING...' : 'HLEDÁM...';
+  btn.textContent = 'HLEDÁM...';
   navigator.geolocation.getCurrentPosition(
     function(pos) {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
-      btn.textContent = LANG==='en' ? 'LOCATION OK' : 'POLOHA OK';
+      btn.textContent = 'POLOHA OK';
       btn.classList.add('on');
       // Pridat/aktualizovat pin polohy
       if (userMarker) map.removeLayer(userMarker);
@@ -495,7 +495,7 @@ function toggleShade() {
   var btn = document.getElementById('btn-shade');
   var sw  = document.getElementById('slwrap');
   if (!shOn) {
-    btn.textContent = LANG==='en' ? 'LOADING...' : 'NAČÍTÁM...';
+    btn.textContent = 'NAČÍTÁM...';
     btn.disabled = true;
     tryInitShade(function(ok) {
       btn.disabled = false;
@@ -503,7 +503,7 @@ function toggleShade() {
         shade.addTo(map);
         shOn = true;
         btn.classList.add('on');
-        btn.textContent = LANG==='en' ? 'SHADOWS ON' : 'STÍNY ZAP';
+        btn.textContent = 'STÍNY ZAP';
         sw.classList.add('on');
         var now = new Date();
         var mins = now.getHours()*60 + now.getMinutes();
@@ -631,9 +631,7 @@ function updMkrs() {
   var map_k = {s:'sunny', c:'cloudy'};
   Object.keys(map_k).forEach(function(k) {
     var key = map_k[k];
-    var el = document.getElementById('cnt-'+k);
-    if (!el) return;
-    el.textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
+    document.getElementById('cnt-'+k).textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
     document.getElementById('hc-'+k).style.display = c[key] > 0 ? '' : 'none';
   });
   var sp  = SC.getPosition(cDate, 50.08, 14.42);
@@ -813,14 +811,7 @@ function closeSheet() { document.getElementById('sheet').classList.remove('open'
 function backToList() { closeSheet(); setTimeout(openList, 50); }
 
 // ── LIST ─────────────────────────────────────────────────────────────────────
-function openList()  { renderList(); document.getElementById('list').classList.add('open');
-  // Swipe na seznam
-  var listEl = document.getElementById('list');
-  var lstStartY = 0;
-  listEl.addEventListener('touchstart', function(e){ lstStartY = e.touches[0].clientY; }, {passive:true});
-  listEl.addEventListener('touchend', function(e){
-    if (e.changedTouches[0].clientY - lstStartY > 80) closeList();
-  }, {passive:true}); }
+function openList()  { renderList(); document.getElementById('list').classList.add('open'); }
 function closeList() { document.getElementById('list').classList.remove('open'); }
 function goMap()     { closeList(); closeSheet(); }
 
@@ -842,7 +833,7 @@ function renderList() {
         var statDiff = (o[a.s]||0)-(o[b.s]||0);
         if (statDiff !== 0) return statDiff;
         if (userLat != null) return getDistance(userLat,userLng,a.lat,a.lng)-getDistance(userLat,userLng,b.lat,b.lng);
-        return a.name.localeCompare(b.name, 'cs');
+        return 0;
       });
     if (!items.length) return;
     html += '<div class="cat-lbl">'+cat.l+'</div>';
@@ -855,7 +846,7 @@ function renderList() {
         +'<div><div class="lbar" style="background:'+m.d+'"></div></div>'
         +'<div class="lbody"><div class="lname" style="font-size:1.1rem;font-weight:900;color:#0D0D0D;margin-bottom:4px;">'+p.name+'</div><div class="ladr" style="font-size:0.58rem;color:#444;margin-bottom:2px;">'+p.addr+'</div>'
         +'<div class="lout" style="font-size:0.58rem;color:#444;margin-bottom:6px;">'+p.out+' &middot; '+p.beer+'</div>'
-        +'<div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><span class="lst" style="color:'+m.c+';font-size:0.62rem;font-weight:700;">'+m.l+'</span>'+(ex?'<span class="lex">'+ex+'</span>':'')+distLabel+'</div>'
+        +'<span class="lst" style="color:'+m.c+';font-size:0.62rem;font-weight:700;">'+m.l+'</span>'+(ex?'<span class="lex">'+ex+'</span>':'')+distLabel
         +'</div></div>';
     });
   });
@@ -963,7 +954,7 @@ var LANG = 'cs';
 var UI = {
   cs: {
     seznam: '&#9776; SEZNAM', mapa: '&#9679; MAPA', live: '&#9201; TEĎ ŽIVĚ',
-    pocasi: 'POČASÍ', vyska: 'VÝŠKA', sviti_lbl: 'SVÍTÍ',
+    pocasi: 'POČASÍ', vyska: 'VÝŠKA',
     zavrít: '&#10005; ZAVŘÍT', navback: '&#8592; SEZNAM',
     kudy: '&#9655; KUDY NA PIVO',
     stiny: '&#9681; STÍNY', poloha: '&#9678; POLOHA',
@@ -971,50 +962,52 @@ var UI = {
   },
   en: {
     seznam: '&#9776; LIST', mapa: '&#9679; MAP', live: '&#9201; LIVE',
-    pocasi: 'WEATHER', vyska: 'ELEVATION', sviti_lbl: 'SUNNY',
+    pocasi: 'WEATHER', vyska: 'ELEVATION',
     zavrít: '&#10005; CLOSE', navback: '&#8592; LIST',
     kudy: '&#9655; HOW TO GET THERE',
     stiny: '&#9681; SHADOWS', poloha: '&#9678; LOCATION',
     mapa_back: '&#8592; MAP',
-    poloha_ok: 'LOCATION OK', poloha_hledam: 'SEARCHING...', poloha_chyba: 'LOCATION',
-    stiny_zap: 'SHADOWS ON', stiny_nactitam: 'LOADING...',
   }
 };
 
 function applyUI() {
   var u = UI[LANG];
+  var ls = LANG === 'en';
+  // Buttony
   document.getElementById('btn-lst').innerHTML = u.seznam;
   document.getElementById('btn-map').innerHTML = u.mapa;
   document.getElementById('btn-rt').innerHTML = u.live;
-  document.getElementById('btn-shade').innerHTML = u.stiny;
-  document.getElementById('btn-geo').innerHTML = u.poloha;
-  document.getElementById('sh-nav-btn') && (document.getElementById('sh-nav-btn').innerHTML = u.kudy);
-  // SEZNAM/ZAVRIT v sh-nav
+  var shade = document.getElementById('btn-shade');
+  if (shade) shade.innerHTML = u.stiny;
+  var geo = document.getElementById('btn-geo');
+  if (geo && (geo.textContent === 'POLOHA' || geo.textContent === 'LOCATION')) geo.innerHTML = u.poloha;
+  var navBtn = document.getElementById('sh-nav-btn');
+  if (navBtn) navBtn.innerHTML = u.kudy;
   var snbs = document.querySelectorAll('#sh-nav .snb');
   if (snbs[0]) snbs[0].innerHTML = u.navback;
   if (snbs[1]) snbs[1].innerHTML = u.zavrít;
-  // MAPA button v listu
   var lhb = document.querySelector('.lhb');
   if (lhb) lhb.innerHTML = u.mapa_back;
-  // Refresh weather value
+  // Header labely
+  var hcs = document.querySelectorAll('.hc .lb');
+  var hcKeys = ['pocasi', 'vyska'];
+  hcs.forEach(function(el, i) { if (hcKeys[i]) el.textContent = u[hcKeys[i]] || el.textContent; });
+  // Legenda
+  var legMap = {
+    'leg-sunny':   [ls ? 'SUNNY' : 'SVÍTÍ'],
+    'leg-partial': [ls ? 'PARTLY SUNNY' : 'ČÁSTEČNĚ'],
+    'leg-cloudy':  [ls ? 'CLOUDY' : 'ZATAŽENO'],
+    'leg-shady':   [ls ? 'SHADE' : 'STÍN'],
+  };
+  Object.keys(legMap).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = legMap[id][0];
+  });
+  // Pocasi hodnota
   if (wCache && wCache.cloud != null) {
     var hw = document.getElementById('hw');
     if (hw) hw.textContent = clt(wCache.cloud);
   }
-  // Legenda
-  var ls = LANG==='en';
-  var legSunny = document.getElementById('leg-sunny');
-  var legPartial = document.getElementById('leg-partial');
-  var legCloudy = document.getElementById('leg-cloudy');
-  var legShady = document.getElementById('leg-shady');
-  if (legSunny) legSunny.textContent = ls ? 'SUNNY' : 'SVÍTÍ';
-  if (legPartial) legPartial.textContent = ls ? 'PARTLY SUNNY' : 'ČÁSTEČNĚ';
-  if (legCloudy) legCloudy.textContent = ls ? 'CLOUDY' : 'ZATAŽENO';
-  if (legShady) legShady.textContent = ls ? 'SHADE' : 'STÍN';
-  // Header labels
-  var hcs = document.querySelectorAll('.hc .lb');
-  var hcKeys = ['pocasi','vyska','sviti_lbl'];
-  hcs.forEach(function(el,i){ if(hcKeys[i]) el.textContent = u[hcKeys[i]] || el.textContent; });
 }
 
 function toggleLang() {
@@ -1022,7 +1015,6 @@ function toggleLang() {
   var btn = document.getElementById('btn-lang');
   btn.textContent = LANG === 'cs' ? 'EN' : 'CZ';
   btn.style.background = LANG === 'en' ? 'var(--sun)' : 'transparent';
-  btn.style.color = 'var(--ink)';
   applyUI();
 }
 
