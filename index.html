@@ -26,7 +26,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #hdr{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--paper);border-bottom:1px solid rgba(13,13,13,0.1);font-family:var(--font);}
 #hdr-top{display:flex;align-items:stretch;border-bottom:1px solid rgba(13,13,13,0.15);overflow-x:auto;scrollbar-width:none;}
 #hdr-top::-webkit-scrollbar{display:none;}
-.hc{padding:6px 11px;border-right:1px solid rgba(13,13,13,0.15);display:flex;flex-direction:column;justify-content:center;font-size:0.57rem;line-height:1.7;flex-shrink:0;}
+.hc{padding:5px 8px;border-right:1px solid rgba(13,13,13,0.15);display:flex;flex-direction:column;justify-content:center;font-size:0.57rem;line-height:1.7;flex-shrink:0;}
 .hc .lb{font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;color:#999;display:block;margin-bottom:2px;}
 .hc .vl{font-weight:700;display:block;line-height:1.2;}
 #logo{padding:7px 13px;border-right:1px solid rgba(13,13,13,0.1);display:flex;align-items:center;gap:9px;flex-shrink:0;}
@@ -211,8 +211,8 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVÍTÍ</span></div>
     <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
     <div class="hc"><span class="lb">Výška</span><span class="vl" id="hs">-</span></div>
-    <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
-    <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataženo</span><span class="vl cnt-c" id="cnt-c">0</span></div>
+    
+    
   </div>
   <div id="hdr-bot">
     <button id="btn-rt" onclick="goRT()">&#9201; TEĎ ŽIVĚ</button>
@@ -624,7 +624,7 @@ function updMkrs() {
   var map_k = {s:'sunny', c:'cloudy'};
   Object.keys(map_k).forEach(function(k) {
     var key = map_k[k];
-    document.getElementById('cnt-'+k).textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
+    var el=document.getElementById('cnt-'+k); if(!el) return; el.textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
     document.getElementById('hc-'+k).style.display = c[key] > 0 ? '' : 'none';
   });
   var sp  = SC.getPosition(cDate, 50.08, 14.42);
