@@ -211,8 +211,8 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVÍTÍ</span></div>
     <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
     <div class="hc"><span class="lb">Výška</span><span class="vl" id="hs">-</span></div>
-    
-    
+    <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
+    <div class="hc" id="hc-c" style="display:none"><span class="lb">Zataženo</span><span class="vl cnt-c" id="cnt-c">0</span></div>
   </div>
   <div id="hdr-bot">
     <button id="btn-rt" onclick="goRT()">&#9201; TEĎ ŽIVĚ</button>
@@ -397,12 +397,12 @@ function startGeo() {
 function reqGeo() {
   var btn = document.getElementById('btn-geo');
   if (!navigator.geolocation) { btn.textContent = 'GPS N/A'; return; }
-  btn.textContent = LANG==='en' ? 'SEARCHING...' : 'HLEDÁM...';
+  btn.textContent = 'HLEDÁM...';
   navigator.geolocation.getCurrentPosition(
     function(pos) {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
-      btn.textContent = LANG==='en' ? 'LOCATION OK' : 'POLOHA OK';
+      btn.textContent = 'POLOHA OK';
       btn.classList.add('on');
       // Pridat/aktualizovat pin polohy
       if (userMarker) map.removeLayer(userMarker);
@@ -562,7 +562,8 @@ function loadWx() {
     updAll();
   })
   .catch(function() {
-    setTimeout(loadWx, 5000);
+    document.getElementById('hw').textContent = '? nedostupné';
+    updAll();
   });
 }
 
@@ -623,7 +624,7 @@ function updMkrs() {
   var map_k = {s:'sunny', c:'cloudy'};
   Object.keys(map_k).forEach(function(k) {
     var key = map_k[k];
-    var el = document.getElementById('cnt-'+k); if (!el) return; el.textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
+    document.getElementById('cnt-'+k).textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
     document.getElementById('hc-'+k).style.display = c[key] > 0 ? '' : 'none';
   });
   var sp  = SC.getPosition(cDate, 50.08, 14.42);
@@ -946,6 +947,7 @@ initMkrs();
 loadWx();
 setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
 setInterval(loadWx, 30*60*1000);
+window.reqGeo = reqGeo;
 </script>
 </body>
 </html>
