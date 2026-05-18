@@ -39,7 +39,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #dt{font-family:var(--font);font-size:0.6rem;padding:7px 9px;background:transparent;border:none;border-right:1px solid rgba(13,13,13,0.15);outline:none;color:var(--ink);flex-shrink:0;min-width:0;color-scheme:light;}
 #btn-lst{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 12px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
-#btn-lang{font-family:var(--font);font-weight:700;font-size:0.6rem;letter-spacing:1px;padding:7px 10px;background:transparent;color:var(--ink);border:none;border-left:1px solid rgba(13,13,13,0.15);cursor:pointer;white-space:nowrap;flex-shrink:0;}
 #btn-map:hover,#btn-lst:hover{background:var(--sun);}
 #btn-lst:hover{background:var(--sun);}
 .cnt-s{color:var(--ink);}
@@ -212,7 +211,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <div id="logo"><span>KDE</span><div id="sdot"></div><span>SVÍTÍ</span></div>
     <div class="hc"><span class="lb">Počasí</span><span class="vl" id="hw">...</span></div>
     <div class="hc"><span class="lb">Výška</span><span class="vl" id="hs">-</span></div>
-    <div class="hc" id="hc-s" style="display:none"><span class="lb">Svítí</span><span class="vl cnt-s" id="cnt-s">0</span></div>
+    
     
   </div>
   <div id="hdr-bot">
@@ -220,7 +219,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
     <input type="datetime-local" id="dt" onchange="goCust(this.value)">
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
     <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
-    <button id="btn-lang" onclick="toggleLang()">EN</button>
   </div>
 </div>
 
@@ -281,10 +279,10 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 </div>
 
 <div id="leg">
-  <div class="lr"><div class="ld" style="background:#F7C325"></div><span id="leg-sunny">SVÍTÍ</span></div>
-  <div class="lr"><div class="ld" style="background:#D4A017"></div><span id="leg-partial">ČÁSTEČNĚ</span></div>
-  <div class="lr"><div class="ld" style="background:#ccc"></div><span id="leg-cloudy">ZATAŽENO</span></div>
-  <div class="lr"><div class="ld" style="background:#888"></div><span id="leg-shady">STÍN</span></div>
+  <div class="lr"><div class="ld" style="background:#F7C325"></div>SVÍTÍ</div>
+  <div class="lr"><div class="ld" style="background:#D4A017"></div>ČÁSTEČNĚ</div>
+  <div class="lr"><div class="ld" style="background:#ccc"></div>ZATAŽENO</div>
+  <div class="lr"><div class="ld" style="background:#888"></div>STÍN</div>
 </div>
 
 <!-- Leaflet MUST load before app script -->
@@ -366,13 +364,7 @@ function p2(n){return String(n).padStart(2,'0');}
 function toISO(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':'+p2(d.getMinutes());}
 function hk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':00';}
 function ftm(d){return d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});}
-function clt(c){
-  if(c==null)return'-';
-  var cs=['Jasno','Skoro jasno','Polojasno','Oblačno','Zataženo'];
-  var en=['Clear','Mostly clear','Partly cloudy','Cloudy','Overcast'];
-  var i=c<20?0:c<40?1:c<60?2:c<80?3:4;
-  return LANG==='en'?en[i]:cs[i];
-}
+function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<60)return 'Polojasno';if(c<80)return 'Oblačno';return 'Zataženo';}
 
 // ── GEOLOCATION ──────────────────────────────────────────────────────────────
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -405,12 +397,12 @@ function startGeo() {
 function reqGeo() {
   var btn = document.getElementById('btn-geo');
   if (!navigator.geolocation) { btn.textContent = 'GPS N/A'; return; }
-  btn.textContent = 'HLEDÁM...';
+  btn.textContent = LANG==='en' ? 'SEARCHING...' : 'HLEDÁM...';
   navigator.geolocation.getCurrentPosition(
     function(pos) {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
-      btn.textContent = 'POLOHA OK';
+      btn.textContent = LANG==='en' ? 'LOCATION OK' : 'POLOHA OK';
       btn.classList.add('on');
       // Pridat/aktualizovat pin polohy
       if (userMarker) map.removeLayer(userMarker);
@@ -631,7 +623,7 @@ function updMkrs() {
   var map_k = {s:'sunny', c:'cloudy'};
   Object.keys(map_k).forEach(function(k) {
     var key = map_k[k];
-    document.getElementById('cnt-'+k).textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
+    var el = document.getElementById('cnt-'+k); if (!el) return; el.textContent = (k==='s' ? c[key]+'/'+PLACES.length : c[key]);
     document.getElementById('hc-'+k).style.display = c[key] > 0 ? '' : 'none';
   });
   var sp  = SC.getPosition(cDate, 50.08, 14.42);
@@ -946,80 +938,6 @@ function initSwipe() {
       el.style.maxHeight = '';
     }
   }, {passive:true});
-}
-
-// ── LANGUAGE ─────────────────────────────────────────────────────────────────
-var LANG = 'cs';
-
-var UI = {
-  cs: {
-    seznam: '&#9776; SEZNAM', mapa: '&#9679; MAPA', live: '&#9201; TEĎ ŽIVĚ',
-    pocasi: 'POČASÍ', vyska: 'VÝŠKA',
-    zavrít: '&#10005; ZAVŘÍT', navback: '&#8592; SEZNAM',
-    kudy: '&#9655; KUDY NA PIVO',
-    stiny: '&#9681; STÍNY', poloha: '&#9678; POLOHA',
-    mapa_back: '&#8592; MAPA',
-  },
-  en: {
-    seznam: '&#9776; LIST', mapa: '&#9679; MAP', live: '&#9201; LIVE',
-    pocasi: 'WEATHER', vyska: 'ELEVATION',
-    zavrít: '&#10005; CLOSE', navback: '&#8592; LIST',
-    kudy: '&#9655; HOW TO GET THERE',
-    stiny: '&#9681; SHADOWS', poloha: '&#9678; LOCATION',
-    mapa_back: '&#8592; MAP',
-  }
-};
-
-function applyUI() {
-  var u = UI[LANG];
-  var ls = LANG === 'en';
-  // Buttony
-  document.getElementById('btn-lst').innerHTML = u.seznam;
-  document.getElementById('btn-map').innerHTML = u.mapa;
-  document.getElementById('btn-rt').innerHTML = u.live;
-  var shade = document.getElementById('btn-shade');
-  if (shade) shade.innerHTML = u.stiny;
-  var geo = document.getElementById('btn-geo');
-  if (geo) {
-    var geoText = geo.textContent.trim();
-    if (geoText === 'POLOHA' || geoText === 'LOCATION') geo.innerHTML = u.poloha;
-    else if (geoText === 'POLOHA OK' || geoText === 'LOCATION OK') geo.textContent = LANG==='en' ? 'LOCATION OK' : 'POLOHA OK';
-  }
-  var navBtn = document.getElementById('sh-nav-btn');
-  if (navBtn) navBtn.innerHTML = u.kudy;
-  var snbs = document.querySelectorAll('#sh-nav .snb');
-  if (snbs[0]) snbs[0].innerHTML = u.navback;
-  if (snbs[1]) snbs[1].innerHTML = u.zavrít;
-  var lhb = document.querySelector('.lhb');
-  if (lhb) lhb.innerHTML = u.mapa_back;
-  // Header labely
-  var hcs = document.querySelectorAll('.hc .lb');
-  var hcKeys = ['pocasi', 'vyska'];
-  hcs.forEach(function(el, i) { if (hcKeys[i]) el.textContent = u[hcKeys[i]] || el.textContent; });
-  // Legenda
-  var legMap = {
-    'leg-sunny':   [ls ? 'SUNNY' : 'SVÍTÍ'],
-    'leg-partial': [ls ? 'PARTLY SUNNY' : 'ČÁSTEČNĚ'],
-    'leg-cloudy':  [ls ? 'CLOUDY' : 'ZATAŽENO'],
-    'leg-shady':   [ls ? 'SHADE' : 'STÍN'],
-  };
-  Object.keys(legMap).forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = legMap[id][0];
-  });
-  // Pocasi hodnota
-  if (wCache && wCache.cloud != null) {
-    var hw = document.getElementById('hw');
-    if (hw) hw.textContent = clt(wCache.cloud);
-  }
-}
-
-function toggleLang() {
-  LANG = LANG === 'cs' ? 'en' : 'cs';
-  var btn = document.getElementById('btn-lang');
-  btn.textContent = LANG === 'cs' ? 'EN' : 'CZ';
-  btn.style.background = LANG === 'en' ? 'var(--sun)' : 'transparent';
-  applyUI();
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
