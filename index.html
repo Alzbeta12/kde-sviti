@@ -47,8 +47,8 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .cnt-r{color:var(--rain);font-size:1.1rem!important;}
 
 /* LIST */
-#list{position:fixed;inset:0;z-index:900;background:var(--paper);transform:translateX(-100%);transition:transform 0.28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);}
-#list.open{transform:translateX(0);}
+#list{position:fixed;left:0;right:0;bottom:0;top:15vh;z-index:900;background:var(--paper);transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:var(--font);border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.12);overflow:hidden;}
+#list.open{transform:translateY(0);}
 #list-hdr{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(13,13,13,0.1);gap:12px;flex-shrink:0;}
 #list-hdr h2{font-family:var(--display);font-size:1.2rem;letter-spacing:2px;flex:1;min-width:0;}
 .lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;}
@@ -74,7 +74,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .lex{font-size:0.62rem;color:#666;margin-left:8px;font-weight:400;}
 
 /* SHEET */
-#sheet{position:fixed;left:0;right:0;bottom:0;z-index:800;background:var(--paper);border-top:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);max-height:80vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.12);}
+#sheet{position:fixed;left:0;right:0;bottom:0;top:15vh;z-index:800;background:var(--paper);border-top:none;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,0.12);}
 #sheet::-webkit-scrollbar{width:3px;}
 #sheet::-webkit-scrollbar-thumb{background:var(--ink);}
 #sheet.open{transform:translateY(0);}
@@ -798,13 +798,25 @@ function openSheet(id) {
 
   map.panTo([p.lat, p.lng], {animate:true});
   document.getElementById('sheet').classList.add('open');
+  var shEl = document.getElementById('sheet');
+  var shStartY = 0;
+  shEl.addEventListener('touchstart', function(e){ shStartY = e.touches[0].clientY; }, {passive:true});
+  shEl.addEventListener('touchend', function(e){
+    if (e.changedTouches[0].clientY - shStartY > 80) closeSheet();
+  }, {passive:true});
   initSwipe();
 }
 function closeSheet() { document.getElementById('sheet').classList.remove('open'); }
 function backToList() { closeSheet(); setTimeout(openList, 50); }
 
 // ── LIST ─────────────────────────────────────────────────────────────────────
-function openList()  { renderList(); document.getElementById('list').classList.add('open'); }
+function openList()  { renderList(); document.getElementById('list').classList.add('open');
+  var listEl = document.getElementById('list');
+  var lstStartY = 0;
+  listEl.addEventListener('touchstart', function(e){ lstStartY = e.touches[0].clientY; }, {passive:true});
+  listEl.addEventListener('touchend', function(e){
+    if (e.changedTouches[0].clientY - lstStartY > 80) closeList();
+  }, {passive:true}); }
 function closeList() { document.getElementById('list').classList.remove('open'); }
 function goMap()     { closeList(); closeSheet(); }
 
