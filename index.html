@@ -1060,7 +1060,33 @@ function buildTrail() {
   }
 
   if (route.length === 0) {
-    body.innerHTML = '<div class="trail-empty">Nestihneš žádný podnik se sluncem. Zkus to zítra!</div>';
+    // Zobrazit zitrejsi prehled
+    var tomorrow = new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0);
+    var tmStops = [];
+    PLACES.forEach(function(p) {
+      var w = getSunWindow(p, tomorrow);
+      if (!w) return;
+      tmStops.push({p: p, window: w});
+    });
+    tmStops.sort(function(a,b){ return a.window.start - b.window.start; });
+
+    var html = '<div class="trail-empty" style="text-align:left;color:var(--ink);padding:0;">';
+    html += '<p style="color:#666;font-size:0.62rem;margin-bottom:16px;">Dnes už slunce nedosvítí. Výhled na zítřek:</p>';
+
+    if (tmStops.length === 0) {
+      html += '<p style="color:#999;font-size:0.62rem;">Ani zítra není předpokládáno slunce.</p>';
+    } else {
+      tmStops.forEach(function(s) {
+        var sh = p2(s.window.start)+':00';
+        var eh = p2(s.window.end)+':59';
+        html += '<div class="trail-stop">';
+        html += '<div class="trail-name">'+s.p.name+'</div>';
+        html += '<div class="trail-time">Svítí '+sh+' – '+eh+'</div>';
+        html += '</div>';
+      });
+    }
+    html += '</div>';
+    body.innerHTML = html;
     return;
   }
 
