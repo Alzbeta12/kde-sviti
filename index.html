@@ -981,14 +981,7 @@ function closeTrail() {
   document.getElementById('trail-modal').classList.remove('open');
 }
 
-function getDistance(lat1, lng1, lat2, lng2) {
-  var R = 6371000;
-  var dLat = (lat2-lat1)*Math.PI/180;
-  var dLng = (lng2-lng1)*Math.PI/180;
-  var a = Math.sin(dLat/2)*Math.sin(dLat/2) +
-    Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
+
 
 function walkMinutes(m) {
   return Math.ceil(m / 80); // 80m/min
@@ -1042,7 +1035,7 @@ function buildTrail() {
     var best = null, bestScore = -1;
     stops.forEach(function(s) {
       if (used[s.p.id]) return;
-      var dist = getDistance(currentLat, currentLng, s.p.lat, s.p.lng);
+      var dist = getDistance(currentLat, currentLng, s.p.lat, s.p.lng) * 1000;
       var walkMin = walkMinutes(dist);
       var arriveH = currentTime + walkMin/60;
       if (arriveH > s.end + 0.5) return; // nestihnem
