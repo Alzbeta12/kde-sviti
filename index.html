@@ -188,7 +188,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 
 /* BOTTOM LEFT CONTROLS */
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
-.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:8px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;white-space:nowrap;border-radius:8px;}
+.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:8px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;white-space:nowrap;text-align:left;border-radius:8px;}
 .cbtn:hover{background:var(--sun);}
 .cbtn.on{background:var(--ink);color:var(--sun);}
 
@@ -282,9 +282,9 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 </div>
 
 <div id="ctl">
-  <button class="cbtn" id="btn-shade" onclick="toggleShade()">🚩 STÍNY</button>
-  <button class="cbtn" id="btn-geo" onclick="reqGeo()">🚩 POLOHA</button>
-  <button class="cbtn" id="btn-trail" onclick="openTrail()">🚩 PIVNÍ TRASA</button>
+  <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
+  <button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>
+  <button class="cbtn" id="btn-trail" onclick="openTrail()">&#9728; PIVNÍ TRASA</button>
 </div>
 
 <div id="slwrap">
