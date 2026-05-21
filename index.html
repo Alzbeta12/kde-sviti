@@ -993,68 +993,39 @@ function buildTrail() {
   var body = document.getElementById('trail-body');
   var now = new Date(cDate);
   var nowH = now.getHours() + now.getMinutes()/60;
+  var hasLocation = userLat !== null;
+  var STAY = 45/60;    // 45 minut pobyt v hodinach
+  var MIN_SUN = 30/60; // minimum 30 minut slunce
 
-  // Najit podniky kde dnes sviti a seradit podle zacatku okna
+  // Najit podniky kde dnes sviti dostatecne dlouho
   var stops = [];
   PLACES.forEach(function(p) {
     var w = getSunWindow(p, now);
     if (!w || !w.start || !w.end) return;
     var wStartH = w.start.getHours() + w.start.getMinutes()/60;
-    var wEndH = w.end.getHours() + w.end.getMinutes()/60 + 59/60;
-    if (wEndH < nowH - 0.5) return; // uz skoncilo
-    stops.push({p: p, start: Math.max(wStartH, nowH), end: wEndH, window: w});
+    var wEndH = w.end.getHours() + 59/60;
+    if (wEndH < nowH) return; // uz skoncilo
+    var effectiveStart = Math.max(wStartH, nowH);
+    var sunLeft = wEndH - effectiveStart;
+    if (sunLeft < MIN_SUN) return; // mene nez 30 minut slunce
+    stops.push({p: p, wStart: wStartH, wEnd: wEndH});
   });
 
   if (stops.length === 0) {
-    body.innerHTML = '<div class="trail-empty">Dnes není předpokládáno slunce v žádném podniku.</div>';
-    return;
-  }
-
-  // Seradit - nejdrive podniky kde sviti ted, pak podle zacatku
-  stops.sort(function(a, b) { return a.start - b.start; });
-
-  // Sestavit trasu - greedy algoritmus
-  var route = [];
-  var currentTime = nowH;
-  var currentLat = userLat || 50.08;
-  var currentLng = userLng || 14.42;
-  var used = {};
-
-  while (stops.length > 0) {
-    var best = null, bestScore = -1;
-    stops.forEach(function(s) {
-      if (used[s.p.id]) return;
-      var dist = getDistance(currentLat, currentLng, s.p.lat, s.p.lng) * 1000;
-      var walkMin = (userLat !== null) ? walkMinutes(dist) : 0;
-      var arriveH = currentTime + walkMin/60;
-      if (arriveH > s.end + 0.5) return; // nestihnem
-      var sunLeft = s.end - Math.max(arriveH, s.start);
-      if (sunLeft < 0.25) return; // mene nez 15 minut
-      var score = sunLeft - walkMin/60;
-      if (score > bestScore) { bestScore = score; best = s; best.dist = dist; best.walkMin = walkMin; best.arriveH = arriveH; }
-    });
-    if (!best) break;
-    used[best.p.id] = true;
-    route.push({p: best.p, arrive: best.arriveH, leave: best.end, walkMin: best.walkMin, dist: best.dist});
-    currentTime = best.end;
-    currentLat = best.p.lat;
-    currentLng = best.p.lng;
-  }
-
-  if (route.length === 0) {
     // Zobrazit zitrejsi prehled
-    var tomorrow = new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0);
+    var tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate()+1);
+    tomorrow.setHours(0,0,0,0);
     var tmStops = [];
     PLACES.forEach(function(p) {
       var w = getSunWindow(p, tomorrow);
       if (!w || !w.start || !w.end) return;
       tmStops.push({p: p, window: w});
     });
-    tmStops.sort(function(a,b){ return a.window.start - b.window.start; });
+    tmStops.sort(function(a,b){ return a.window.start.getHours()-b.window.start.getHours(); });
 
     var html = '<div class="trail-empty" style="text-align:left;color:var(--ink);padding:0;">';
     html += '<p style="color:#666;font-size:0.62rem;margin-bottom:16px;">Dnes už slunce nedosvítí. Výhled na zítřek:</p>';
-
     if (tmStops.length === 0) {
       html += '<p style="color:#999;font-size:0.62rem;">Ani zítra není předpokládáno slunce.</p>';
     } else {
@@ -1072,51 +1043,80 @@ function buildTrail() {
     return;
   }
 
-  // Render
+  // Sestavit trasu - greedy algoritmus s 45min pobytem
+  var route = [];
+  var currentTime = nowH;
+  var currentLat = hasLocation ? userLat : null;
+  var currentLng = hasLocation ? userLng : null;
+  var used = {};
+
+  for (var iter = 0; iter < stops.length; iter++) {
+    var best = null, bestScore = -1;
+    stops.forEach(function(s) {
+      if (used[s.p.id]) return;
+      // Vypocitat cas prichodu
+      var walkMin = 0;
+      if (currentLat !== null) {
+        var dist = getDistance(currentLat, currentLng, s.p.lat, s.p.lng) * 1000;
+        walkMin = walkMinutes(dist);
+      }
+      var arriveH = currentTime + walkMin/60;
+      var effectiveStart = Math.max(s.wStart, arriveH);
+      if (effectiveStart > s.wEnd - MIN_SUN) return; // nestihnem min 30 min
+      var sunAvail = s.wEnd - effectiveStart;
+      var stayH = Math.min(STAY, sunAvail);
+      var score = stayH - walkMin/120; // preferujeme blizsi podniky
+      if (score > bestScore) {
+        bestScore = score;
+        best = {
+          p: s.p,
+          arrive: effectiveStart,
+          leave: effectiveStart + stayH,
+          walkMin: walkMin,
+          wEnd: s.wEnd
+        };
+      }
+    });
+    if (!best) break;
+    used[best.p.id] = true;
+    route.push(best);
+    currentTime = best.leave;
+    currentLat = best.p.lat;
+    currentLng = best.p.lng;
+  }
+
+  if (route.length === 0) {
+    body.innerHTML = '<div class="trail-empty">Dnes není dost slunce pro pivní trasu.</div>';
+    return;
+  }
+
+  // Render trasy
   var html = '';
   var gmapsWaypoints = [];
   route.forEach(function(stop, i) {
     var arrH = Math.floor(stop.arrive); var arrM = Math.round((stop.arrive%1)*60);
-    var leaH = Math.floor(stop.leave);  var leaM = 59;
+    var leaH = Math.floor(stop.leave);  var leaM = Math.round((stop.leave%1)*60);
     var arrStr = p2(arrH)+':'+p2(arrM);
     var leaStr = p2(leaH)+':'+p2(leaM);
-    var walkStr = (userLat !== null && stop.walkMin > 0) ? stop.walkMin+' min chůze' : '';
     html += '<div class="trail-stop">';
     html += '<div class="trail-num">Zastávka '+(i+1)+'</div>';
     html += '<div class="trail-name">'+stop.p.name+'</div>';
     html += '<div class="trail-time">Přijdi v '+arrStr+' · Odejdi v '+leaStr+'</div>';
-    if (walkStr) html += '<div class="trail-walk">'+walkStr+'</div>';
+    if (hasLocation && stop.walkMin > 0) {
+      html += '<div class="trail-walk">'+stop.walkMin+' min chůze</div>';
+    }
     html += '</div>';
     gmapsWaypoints.push(stop.p.lat+','+stop.p.lng);
   });
 
   // Google Maps link
-  var origin = userLat ? userLat+','+userLng : gmapsWaypoints[0];
+  var origin = hasLocation ? userLat+','+userLng : gmapsWaypoints[0];
   var dest = gmapsWaypoints[gmapsWaypoints.length-1];
-  var waypoints = gmapsWaypoints.slice(0,-1).join('|');
-  var gmapsUrl = 'https://www.google.com/maps/dir/'+origin+'/'+dest+(waypoints?'?waypoints='+encodeURIComponent(waypoints):'');
+  var wayStr = gmapsWaypoints.slice(0,-1).slice(1).join('|');
+  var gmapsUrl = 'https://www.google.com/maps/dir/'+origin+'/'+dest+(wayStr?'?waypoints='+encodeURIComponent(wayStr):'');
   html += '<a href="'+gmapsUrl+'" target="_blank" id="trail-gmaps">&#9655; OTEVŘÍT V GOOGLE MAPS</a>';
 
   body.innerHTML = html;
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────────────
-document.getElementById('dt').value = toISO(cDate);
-initMkrs();
-loadWx();
-setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
-setInterval(loadWx, 30*60*1000);
-window.reqGeo = reqGeo;
-window.openTrail = openTrail;
-window.closeTrail = closeTrail;
-</script>
-<div id="trail-modal">
-  <div style="width:36px;height:4px;background:rgba(13,13,13,0.15);border-radius:2px;margin:10px auto 0;"></div>
-  <div id="trail-header">
-    <span id="trail-title">PIVNÍ TRASA</span>
-    <button id="trail-close" onclick="closeTrail()">&#10005; ZAVŘÍT</button>
-  </div>
-  <div id="trail-body"></div>
-</div>
-</body>
-</html>
+
