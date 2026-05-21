@@ -987,20 +987,7 @@ function walkMinutes(m) {
   return Math.ceil(m / 80); // 80m/min
 }
 
-function getSunWindow(p, date) {
-  var d = new Date(date); d.setHours(0,0,0,0);
-  var start = null, end = null;
-  for (var h = 6; h < 22; h++) {
-    var t = new Date(d); t.setHours(h);
-    var wx = (wCache && wCache.hm) ? (wCache.hm[hk(t)] || wCache) : wCache;
-    var st = getStWithWx ? getStWithWx(p, t, wx) : getSt(p, t);
-    if (st === 'sunny' || st === 'partial') {
-      if (!start) start = h;
-      end = h;
-    }
-  }
-  return start !== null ? {start: start, end: end} : null;
-}
+
 
 function buildTrail() {
   var body = document.getElementById('trail-body');
