@@ -160,23 +160,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 .tll.cloudy  { color:#999; }
 .tll.shady   { color:#555; }
 
-/* PIVNI TRASA */
-#btn-trail{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:7px 11px;background:var(--ink);color:var(--paper);border:var(--rule);cursor:pointer;white-space:nowrap;border-radius:8px;}
-#trail-modal{position:fixed;left:0;right:0;bottom:0;top:15vh;z-index:950;background:var(--paper);border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.12);overflow-y:auto;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.4,0,.2,1);font-family:var(--font);}
-#trail-modal.open{transform:translateY(0);}
-#trail-header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid rgba(13,13,13,0.08);position:sticky;top:0;background:var(--paper);z-index:2;}
-#trail-title{font-size:1.1rem;font-weight:900;}
-#trail-close{font-family:var(--font);font-size:0.62rem;font-weight:600;padding:6px 12px;background:transparent;border:1px solid rgba(13,13,13,0.2);cursor:pointer;border-radius:8px;}
-#trail-body{padding:16px;}
-.trail-stop{padding:14px 0;border-bottom:1px solid rgba(13,13,13,0.07);}
-.trail-stop:last-child{border-bottom:none;}
-.trail-num{font-size:0.48rem;letter-spacing:1.5px;color:#999;text-transform:uppercase;margin-bottom:4px;}
-.trail-name{font-size:1rem;font-weight:700;margin-bottom:4px;}
-.trail-time{font-size:0.62rem;color:#444;margin-bottom:2px;}
-.trail-walk{font-size:0.58rem;color:#999;}
-.trail-empty{padding:24px;text-align:center;color:#999;font-size:0.62rem;}
-#trail-gmaps{display:block;width:100%;padding:12px;background:var(--ink);color:var(--sun);font-family:var(--font);font-size:0.65rem;font-weight:700;letter-spacing:1px;border:none;cursor:pointer;text-align:center;text-decoration:none;border-radius:10px;margin-top:16px;}
-
 /* USER LOCATION PIN */
 .user-pin {
   width: 16px; height: 16px;
@@ -188,7 +171,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 
 /* BOTTOM LEFT CONTROLS */
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
-.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:8px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;white-space:nowrap;text-align:left;border-radius:8px;}
+.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:8px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;white-space:nowrap;border-radius:8px;}
 .cbtn:hover{background:var(--sun);}
 .cbtn.on{background:var(--ink);color:var(--sun);}
 
@@ -284,7 +267,6 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 <div id="ctl">
   <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
   <button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>
-  <button class="cbtn" id="btn-trail" onclick="openTrail()">&#9728; PIVNÍ TRASA</button>
 </div>
 
 <div id="slwrap">
@@ -971,153 +953,13 @@ function initSwipe() {
   }, {passive:true});
 }
 
-// ── PIVNÍ TRASA ──────────────────────────────────────────────────────────────
-function openTrail() {
-  buildTrail();
-  document.getElementById('trail-modal').classList.add('open');
-}
-
-function closeTrail() {
-  document.getElementById('trail-modal').classList.remove('open');
-}
-
-
-
-function walkMinutes(m) {
-  return Math.ceil(m / 80); // 80m/min
-}
-
-
-
-function buildTrail() {
-  var body = document.getElementById('trail-body');
-  var now = new Date(cDate);
-  var nowH = now.getHours() + now.getMinutes()/60;
-  var hasLocation = userLat !== null;
-  var STAY = 45/60;    // 45 minut pobyt v hodinach
-  var MIN_SUN = 30/60; // minimum 30 minut slunce
-
-  // Najit podniky kde dnes sviti dostatecne dlouho
-  var stops = [];
-  PLACES.forEach(function(p) {
-    var w = getSunWindow(p, now);
-    if (!w || !w.start || !w.end) return;
-    var wStartH = w.start.getHours() + w.start.getMinutes()/60;
-    var wEndH = w.end.getHours() + 59/60;
-    if (wEndH < nowH) return; // uz skoncilo
-    var effectiveStart = Math.max(wStartH, nowH);
-    var sunLeft = wEndH - effectiveStart;
-    if (sunLeft < MIN_SUN) return; // mene nez 30 minut slunce
-    stops.push({p: p, wStart: wStartH, wEnd: wEndH});
-  });
-
-  if (stops.length === 0) {
-    // Zobrazit zitrejsi prehled
-    var tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate()+1);
-    tomorrow.setHours(0,0,0,0);
-    var tmStops = [];
-    PLACES.forEach(function(p) {
-      var w = getSunWindow(p, tomorrow);
-      if (!w || !w.start || !w.end) return;
-      tmStops.push({p: p, window: w});
-    });
-    tmStops.sort(function(a,b){ return a.window.start.getHours()-b.window.start.getHours(); });
-
-    var html = '<div class="trail-empty" style="text-align:left;color:var(--ink);padding:0;">';
-    html += '<p style="color:#666;font-size:0.62rem;margin-bottom:16px;">Dnes už slunce nedosvítí. Výhled na zítřek:</p>';
-    if (tmStops.length === 0) {
-      html += '<p style="color:#999;font-size:0.62rem;">Ani zítra není předpokládáno slunce.</p>';
-    } else {
-      tmStops.forEach(function(s) {
-        var sh = p2(s.window.start.getHours())+':00';
-        var eh = p2(s.window.end.getHours())+':59';
-        html += '<div class="trail-stop">';
-        html += '<div class="trail-name">'+s.p.name+'</div>';
-        html += '<div class="trail-time">Svítí '+sh+' – '+eh+'</div>';
-        html += '</div>';
-      });
-    }
-    html += '</div>';
-    body.innerHTML = html;
-    return;
-  }
-
-  // Sestavit trasu - greedy algoritmus s 45min pobytem
-  var route = [];
-  var currentTime = nowH;
-  var currentLat = hasLocation ? userLat : null;
-  var currentLng = hasLocation ? userLng : null;
-  var used = {};
-
-  for (var iter = 0; iter < stops.length; iter++) {
-    var best = null, bestScore = -1;
-    stops.forEach(function(s) {
-      if (used[s.p.id]) return;
-      // Vypocitat cas prichodu
-      var walkMin = 0;
-      if (currentLat !== null) {
-        var dist = getDistance(currentLat, currentLng, s.p.lat, s.p.lng) * 1000;
-        walkMin = walkMinutes(dist);
-      }
-      var arriveH = currentTime + walkMin/60;
-      var effectiveStart = Math.max(s.wStart, arriveH);
-      if (effectiveStart > s.wEnd - MIN_SUN) return; // nestihnem min 30 min
-      var sunAvail = s.wEnd - effectiveStart;
-      var stayH = Math.min(STAY, sunAvail);
-      var score = stayH - walkMin/120; // preferujeme blizsi podniky
-      if (score > bestScore) {
-        bestScore = score;
-        best = {
-          p: s.p,
-          arrive: effectiveStart,
-          leave: effectiveStart + stayH,
-          walkMin: walkMin,
-          wEnd: s.wEnd
-        };
-      }
-    });
-    if (!best) break;
-    used[best.p.id] = true;
-    route.push(best);
-    currentTime = best.leave;
-    currentLat = best.p.lat;
-    currentLng = best.p.lng;
-  }
-
-  if (route.length === 0) {
-    body.innerHTML = '<div class="trail-empty">Dnes není dost slunce pro pivní trasu.</div>';
-    return;
-  }
-
-  // Render trasy
-  var html = '';
-  var gmapsWaypoints = [];
-  route.forEach(function(stop, i) {
-    var arrH = Math.floor(stop.arrive); var arrM = Math.round((stop.arrive%1)*60);
-    var leaH = Math.floor(stop.leave);  var leaM = Math.round((stop.leave%1)*60);
-    var arrStr = p2(arrH)+':'+p2(arrM);
-    var leaStr = p2(leaH)+':'+p2(leaM);
-    html += '<div class="trail-stop">';
-    html += '<div class="trail-num">Zastávka '+(i+1)+'</div>';
-    html += '<div class="trail-name">'+stop.p.name+'</div>';
-    html += '<div class="trail-time">Přijdi v '+arrStr+' · Odejdi v '+leaStr+'</div>';
-    if (hasLocation && stop.walkMin > 0) {
-      html += '<div class="trail-walk">'+stop.walkMin+' min chůze</div>';
-    }
-    html += '</div>';
-    gmapsWaypoints.push(stop.p.lat+','+stop.p.lng);
-  });
-
-  // Google Maps link
-  var origin = hasLocation ? userLat+','+userLng : gmapsWaypoints[0];
-  var dest = gmapsWaypoints[gmapsWaypoints.length-1];
-  var wayStr = gmapsWaypoints.slice(0,-1).slice(1).join('|');
-  var gmapsUrl = 'https://www.google.com/maps/dir/'+origin+'/'+dest+(wayStr?'?waypoints='+encodeURIComponent(wayStr):'');
-  html += '<a href="'+gmapsUrl+'" target="_blank" id="trail-gmaps">&#9655; OTEVŘÍT V GOOGLE MAPS</a>';
-
-  body.innerHTML = html;
-}
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.getElementById('dt').value = toISO(cDate);
+initMkrs();
+loadWx();
+setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
+setInterval(loadWx, 30*60*1000);
+window.reqGeo = reqGeo;
 </script>
 </body>
 </html>
