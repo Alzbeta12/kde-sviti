@@ -282,9 +282,9 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 </div>
 
 <div id="ctl">
-  <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
-  <button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>
-  <button class="cbtn" id="btn-trail" onclick="openTrail()">&#9728; PIVNÍ TRASA</button>
+  <button class="cbtn" id="btn-shade" onclick="toggleShade()">🚩 STÍNY</button>
+  <button class="cbtn" id="btn-geo" onclick="reqGeo()">🚩 POLOHA</button>
+  <button class="cbtn" id="btn-trail" onclick="openTrail()">🚩 PIVNÍ TRASA</button>
 </div>
 
 <div id="slwrap">
@@ -998,9 +998,11 @@ function buildTrail() {
   var stops = [];
   PLACES.forEach(function(p) {
     var w = getSunWindow(p, now);
-    if (!w) return;
-    if (w.end < nowH - 0.5) return; // uz skoncilo
-    stops.push({p: p, start: Math.max(w.start, nowH), end: w.end, window: w});
+    if (!w || !w.start || !w.end) return;
+    var wStartH = w.start.getHours() + w.start.getMinutes()/60;
+    var wEndH = w.end.getHours() + w.end.getMinutes()/60 + 59/60;
+    if (wEndH < nowH - 0.5) return; // uz skoncilo
+    stops.push({p: p, start: Math.max(wStartH, nowH), end: wEndH, window: w});
   });
 
   if (stops.length === 0) {
@@ -1023,7 +1025,7 @@ function buildTrail() {
     stops.forEach(function(s) {
       if (used[s.p.id]) return;
       var dist = getDistance(currentLat, currentLng, s.p.lat, s.p.lng) * 1000;
-      var walkMin = walkMinutes(dist);
+      var walkMin = (userLat !== null) ? walkMinutes(dist) : 0;
       var arriveH = currentTime + walkMin/60;
       if (arriveH > s.end + 0.5) return; // nestihnem
       var sunLeft = s.end - Math.max(arriveH, s.start);
@@ -1045,7 +1047,7 @@ function buildTrail() {
     var tmStops = [];
     PLACES.forEach(function(p) {
       var w = getSunWindow(p, tomorrow);
-      if (!w) return;
+      if (!w || !w.start || !w.end) return;
       tmStops.push({p: p, window: w});
     });
     tmStops.sort(function(a,b){ return a.window.start - b.window.start; });
@@ -1057,8 +1059,8 @@ function buildTrail() {
       html += '<p style="color:#999;font-size:0.62rem;">Ani zítra není předpokládáno slunce.</p>';
     } else {
       tmStops.forEach(function(s) {
-        var sh = p2(s.window.start)+':00';
-        var eh = p2(s.window.end)+':59';
+        var sh = p2(s.window.start.getHours())+':00';
+        var eh = p2(s.window.end.getHours())+':59';
         html += '<div class="trail-stop">';
         html += '<div class="trail-name">'+s.p.name+'</div>';
         html += '<div class="trail-time">Svítí '+sh+' – '+eh+'</div>';
@@ -1078,12 +1080,12 @@ function buildTrail() {
     var leaH = Math.floor(stop.leave);  var leaM = 59;
     var arrStr = p2(arrH)+':'+p2(arrM);
     var leaStr = p2(leaH)+':'+p2(leaM);
-    var walkStr = stop.walkMin > 0 ? stop.walkMin+' min chůze' : 'Výchozí bod';
+    var walkStr = (userLat !== null && stop.walkMin > 0) ? stop.walkMin+' min chůze' : '';
     html += '<div class="trail-stop">';
     html += '<div class="trail-num">Zastávka '+(i+1)+'</div>';
     html += '<div class="trail-name">'+stop.p.name+'</div>';
     html += '<div class="trail-time">Přijdi v '+arrStr+' · Odejdi v '+leaStr+'</div>';
-    html += '<div class="trail-walk">'+walkStr+'</div>';
+    if (walkStr) html += '<div class="trail-walk">'+walkStr+'</div>';
     html += '</div>';
     gmapsWaypoints.push(stop.p.lat+','+stop.p.lng);
   });
