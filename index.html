@@ -223,7 +223,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 </div>
 
 <div id="list">
-  <div id="list-hdr">
+  <div id="list-hdr"><input id="search" type="text" placeholder="Hledat podnik..." oninput="filterSearch(this.value)" style="flex:1;font-family:var(--font);font-size:0.62rem;border:1px solid rgba(13,13,13,0.15);border-radius:8px;padding:6px 10px;outline:none;background:transparent;">
     <h2>KDE SVÍTÍ</h2>
     <button class="lhb" onclick="goMap()">&#8592; MAPA</button>
   </div>
@@ -961,6 +961,8 @@ loadWx();
 setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
 setInterval(loadWx, 30*60*1000);
 window.reqGeo = reqGeo;
+function filterSearch(q){var el=document.getElementById("list-sc");if(!el)return;var rows=el.querySelectorAll(".lrow");rows.forEach(function(r){var name=r.querySelector(".lname");if(!name)return;r.style.display=name.textContent.toLowerCase().includes(q.toLowerCase())?"":"none";});}
+window.filterSearch=filterSearch;
 </script>
 </body>
 </html>
