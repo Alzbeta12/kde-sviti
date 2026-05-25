@@ -538,7 +538,7 @@ function togglePlay() {
   if (playing) { stopPlay(); return; }
   playing = true;
   var b = document.getElementById('btn-play');
-  b.innerHTML = '&#9646;&#9646; PAUSE'; b.classList.add('on');
+  b.innerHTML = 'PAUSE'; b.classList.add('on');
   pIv = setInterval(function() {
     var s = document.getElementById('slr');
     var v = parseInt(s.value) + 10; if (v > 1439) v = 0;
