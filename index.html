@@ -272,7 +272,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 <div id="slwrap">
   <div id="sl-top">
     <span id="sl-lbl">12:00</span>
-    <button id="btn-play" onclick="togglePlay()">&#9654; PLAY</button>
+    <button id="btn-play" onclick="togglePlay()">PLAY</button>
   </div>
   <input type="range" id="slr" min="0" max="1439" step="5" value="720" oninput="onSlider(this.value)">
   <div id="sl-ticks"><span>0:00</span><span>6:00</span><span>12:00</span><span>18:00</span><span>23:55</span></div>
@@ -531,7 +531,7 @@ function onSlider(v) {
 function stopPlay() {
   clearInterval(pIv); playing = false;
   var b = document.getElementById('btn-play');
-  b.innerHTML = '&#9654; PLAY'; b.classList.remove('on');
+  b.innerHTML = 'PLAY'; b.classList.remove('on');
 }
 
 function togglePlay() {
