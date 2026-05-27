@@ -1,0 +1,22 @@
+{
+  "name": "Kde svítí",
+  "short_name": "Kde svítí",
+  "description": "Najdi bar v Praze kde právě svítí sluníčko",
+  "start_url": "/kde-sviti/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#F7C325",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "kde-sviti-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "kde-sviti-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
