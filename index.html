@@ -873,7 +873,7 @@ function selList(id) { closeList(); setTimeout(function(){ openSheet(id); }, 50)
 // ── TIME ─────────────────────────────────────────────────────────────────────
 function goRT() {
   isRT = true; cDate = new Date();
-  document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear()+' '+ftm(cDate);
+  document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear();
   document.getElementById('btn-rt').classList.remove('off');
   updAll();
 }
@@ -964,7 +964,7 @@ function initSwipe() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear()+' '+ftm(cDate);
+document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear();
 initMkrs();
 loadWx();
 setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
