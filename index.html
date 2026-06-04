@@ -223,7 +223,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
   </div>
   <div id="hdr-bot">
     <button id="btn-rt" onclick="goRT()">&#9201; ŽIVĚ</button>
-    <span id="dt" style="font-family:var(--font);font-size:0.62rem;color:var(--ink);padding:7px 0;">TEĎ ŽIVĚ</span>
+    <span id="dt" style="font-family:var(--font);font-size:0.62rem;color:var(--ink);padding:7px 0;">...</span>
     <button id="btn-lst" onclick="openList()">&#9776; SEZNAM</button>
     <button id="btn-map" onclick="goMap()">&#9679; MAPA</button>
   </div>
@@ -872,7 +872,7 @@ function selList(id) { closeList(); setTimeout(function(){ openSheet(id); }, 50)
 // ── TIME ─────────────────────────────────────────────────────────────────────
 function goRT() {
   isRT = true; cDate = new Date();
-  document.getElementById('dt').value = toISO(cDate);
+  document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear()+' '+ftm(cDate);
   document.getElementById('btn-rt').classList.remove('off');
   updAll();
 }
@@ -963,7 +963,7 @@ function initSwipe() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-document.getElementById('dt').value = toISO(cDate);
+document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear()+' '+ftm(cDate);
 initMkrs();
 loadWx();
 setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
