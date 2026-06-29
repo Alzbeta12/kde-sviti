@@ -374,7 +374,7 @@ function p2(n){return String(n).padStart(2,'0');}
 function toISO(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':'+p2(d.getMinutes());}
 function hk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':00';}
 function ftm(d){return d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});}
-function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<60)return 'Polojasno';if(c<80)return 'Oblačno';return 'Zataženo';}
+function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<65)return 'Polojasno';if(c<85)return 'Oblačno';return 'Zataženo';}
 
 // ── GEOLOCATION ──────────────────────────────────────────────────────────────
 function getDistance(lat1, lng1, lat2, lng2) {
