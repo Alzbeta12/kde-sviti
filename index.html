@@ -279,7 +279,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 <div id="slwrap">
   <div id="sl-top">
     <span id="sl-lbl">12:00</span>
-    <button id="btn-play" onclick="togglePlay()">PLAY</button>
+    <button id="btn-play" onclick="togglePlay()">PŘEHRÁT</button>
   </div>
   <input type="range" id="slr" min="0" max="1439" step="5" value="720" oninput="onSlider(this.value)">
   <div id="sl-ticks"><span>0:00</span><span>6:00</span><span>12:00</span><span>18:00</span><span>23:55</span></div>
@@ -547,7 +547,7 @@ function togglePlay() {
   if (playing) { stopPlay(); return; }
   playing = true;
   var b = document.getElementById('btn-play');
-  b.innerHTML = 'PAUSE'; b.classList.add('on');
+  b.innerHTML = 'ZASTAVIT'; b.classList.add('on');
   pIv = setInterval(function() {
     var s = document.getElementById('slr');
     var v = parseInt(s.value) + 10; if (v > 1439) v = 0;
