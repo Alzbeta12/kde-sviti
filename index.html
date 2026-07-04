@@ -58,7 +58,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 #list.open{transform:translateY(0);}
 #list-hdr{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(13,13,13,0.1);gap:12px;flex-shrink:0;}
 #list-hdr h2{font-family:var(--display);font-size:1.2rem;letter-spacing:2px;flex:1;min-width:0;}
-.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;border-radius:8px;text-align:left;}
+.lhb{font-family:var(--font);font-size:0.6rem;font-weight:700;padding:6px 12px;background:var(--ink);color:var(--sun);border:var(--rule);cursor:pointer;white-space:nowrap;border-radius:8px;}
 .lhb:hover{background:var(--sun);}
 #list-fil{display:flex;border-bottom:1px solid rgba(13,13,13,0.1);overflow-x:auto;scrollbar-width:none;flex-shrink:0;-webkit-overflow-scrolling:touch;min-height:40px;}
 #list-fil::-webkit-scrollbar{display:none;}
@@ -178,7 +178,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 
 /* BOTTOM LEFT CONTROLS */
 #ctl{position:fixed;bottom:20px;left:14px;z-index:700;display:flex;flex-direction:column;gap:6px;}
-.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:8px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;white-space:nowrap;border-radius:8px;text-align:left;}
+.cbtn{font-family:var(--font);font-size:0.59rem;font-weight:700;letter-spacing:1px;padding:8px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;white-space:nowrap;border-radius:8px;}
 .cbtn:hover{background:var(--sun);}
 .cbtn.on{background:var(--ink);color:var(--sun);}
 
@@ -273,7 +273,7 @@ html,body{height:100%;overflow:hidden;background:#FFFFFF;}
 
 <div id="ctl">
   <button class="cbtn" id="btn-shade" onclick="toggleShade()">&#9681; STÍNY</button>
-  <button class="cbtn" id="btn-geo" onclick="reqGeo()"><button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>#9678; POLOHA</button><div style="font-family:var(--font);font-size:0.48rem;color:#aaa;padding:2px 0 0 2px;">© 2026 Alžběta Bryndová</div>
+  <button class="cbtn" id="btn-geo" onclick="reqGeo()">&#9678; POLOHA</button>
 </div>
 
 <div id="slwrap">
@@ -343,7 +343,6 @@ var PLACES = [
   {id:30, name:"Pivnice U Sadu",        addr:"Škroupovo nám. 5, Žižkov, Praha 3",      hours:"Po 8:00-2:00 / Ut-So 8:00-4:00 / Ne 8:00-2:00", beer:"Plzeň + rotující speciály",     out:"zahrádka pod Žižkovskou věží",    lat:50.0805, lng:14.4492, f:180,a:160, type:"zahradka", note:"Kultovní žižkovská pivnice, kde čepují pivo až do rána. Venkovní zahrádka."},
   {id:31, name:"Střídačka", addr:"Týnská ulička 2, Staré Město", hours:"Po-So 11:00-24:00 / Ne 11:00-22:00", beer:"Plzeň (tank)", out:"zahrádka u Týnského chrámu", lat:50.0881, lng:14.4227, f:160,a:80, type:"zahradka", note:"Česká klasika — pečlivě ošetřená plzeň, BBQ a žebra u Týnského chrámu."},
   {id:32, name:"Lokál U Jiráta",        addr:"Vodičkova 696/26, Nové Město",       hours:"Po-Pá 11:00-23:30 / So 12:00-23:30 / Ne 12:00-22:30",  beer:"Plzeň (tank), Kozel Černý nefiltr, Proovan IPA nealkoholický",  out:"parapet ve Vodičkově ulici",         lat:50.0803,   lng:14.4240,   f:315,a:60,  type:"mokrej",  note:"Kultovní Lokál ve Vodičkově — pečlivě ošetřená Plzeň a parapet v centru města."},
-  {id:33, name:"Kuchyň",               addr:"Hradčanské nám. 186/1, Hradčany",    hours:"denně 11:30-23:00",                   beer:"Plzeň (tank)",              out:"terasa Salmovského paláce s výhledem na Prahu",    lat:50.0894,   lng:14.3980,   f:135,a:100, type:"zahradka", note:"Ambiente restaurace v Salmovském paláci na Hradčanském náměstí — pečlivě ošetřená Plzeň a poctivá česká kuchyně s jedním z nejkrásnějších výhledů na Prahu."},
   {id:22, name:"U Veverky",            addr:"Eliášova 324, Bubeneč, Praha 6",               hours:"denně 11:00-23:30",          beer:"Plzeň (tank), Birell",             out:"zahrada v Bubenči",                        lat:50.0990,   lng:14.4022,   f:200,a:130, type:"zahradka",   note:"Staropražská pivnice v Bubenči s tankovou plzní. Venkovní zahrádka."},
 ];
 
@@ -374,7 +373,7 @@ function p2(n){return String(n).padStart(2,'0');}
 function toISO(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':'+p2(d.getMinutes());}
 function hk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())+'T'+p2(d.getHours())+':00';}
 function ftm(d){return d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});}
-function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<65)return 'Polojasno';if(c<85)return 'Oblačno';return 'Zataženo';}
+function clt(c){if(c==null)return'-';if(c<20)return 'Jasno';if(c<40)return 'Skoro jasno';if(c<60)return 'Polojasno';if(c<80)return 'Oblačno';return 'Zataženo';}
 
 // ── GEOLOCATION ──────────────────────────────────────────────────────────────
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -873,7 +872,7 @@ function selList(id) { closeList(); setTimeout(function(){ openSheet(id); }, 50)
 // ── TIME ─────────────────────────────────────────────────────────────────────
 function goRT() {
   isRT = true; cDate = new Date();
-  document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear();
+  document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear()+' '+ftm(cDate);
   document.getElementById('btn-rt').classList.remove('off');
   updAll();
 }
@@ -964,7 +963,7 @@ function initSwipe() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear();
+document.getElementById('dt').textContent = p2(cDate.getDate())+'.'+p2(cDate.getMonth()+1)+'.'+cDate.getFullYear()+' '+ftm(cDate);
 initMkrs();
 loadWx();
 setInterval(function(){ if(isRT){ cDate=new Date(); document.getElementById('dt').value=toISO(cDate); updAll(); } }, 30000);
@@ -973,5 +972,5 @@ window.reqGeo = reqGeo;
 function filterSearch(q){var el=document.getElementById("list-sc");if(!el)return;var rows=el.querySelectorAll(".lrow");rows.forEach(function(r){var name=r.querySelector(".lname");if(!name)return;r.style.display=name.textContent.toLowerCase().includes(q.toLowerCase())?"":"none";});}
 window.filterSearch=filterSearch;
 </script>
-<div style="text-align:center;font-family:var(--font);font-size:0.45rem;color:#aaa;padding:8px;">© 2026 Alžběta Bryndová. Všechna práva vyhrazena.</div></body>
+</body>
 </html>
